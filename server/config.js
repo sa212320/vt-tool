@@ -51,6 +51,21 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCh-Q3CeZo3C9TUFIGAWByig',
   'https://www.youtube.com/channel/UCqsxSVegfLuA24QSVqGOtrQ',
   'https://www.youtube.com/channel/UCqsxSVegfLuA24QSVqGOtrQ',
+  'https://www.youtube.com/channel/UCQymE4njJ-t9oahwX9-iC8w',
+  'https://www.youtube.com/channel/UCjXpA7CBwVEVXuiQostEvYQ',
+  'https://www.youtube.com/channel/UCDyp9Sro4pyBZLnBy3uEZ9w',
+  'https://www.youtube.com/channel/UCKv_kzZx0yja3TzN4RyuFDA',
+  'https://www.youtube.com/channel/UC45JQZfmklSB9ipib4vQEhw',
+  'https://www.youtube.com/channel/UCuX1VwnUxedIdihEhiVbACw',
+  'https://www.youtube.com/channel/UCGoddwjppco6a8C1AtqZW9Q',
+  'https://www.youtube.com/channel/UC-uFyVEjZgI9cX-ozKqD0iA',
+  'https://www.youtube.com/channel/UCtWuTDvZeZ09COJ2SjfESzQ',
+  'https://www.youtube.com/channel/UCaN_Pq3x9pzhb7t9KhxQm8Q',
+  'https://www.youtube.com/channel/UC262ifYFjsiCaLM3JaXv3AQ',
+  'https://www.youtube.com/channel/UCW21m4m4Sqg5eM2EEh-o1JA',
+  'https://www.youtube.com/channel/UCW1NDsRkcxldlZNTUsdUyBQ',
+  'https://www.youtube.com/channel/UCtKyM4DA8CyCAm5LGsvUsag',
+  'https://www.youtube.com/channel/UCSOpxKLXctMuO3Q1LFSHs_Q',
 ];
 
 const twitchList = [
