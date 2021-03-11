@@ -6,6 +6,7 @@ const Channel = require('../database/channel');
 const Vtuber = require('../database/vtuber');
 const Videos = require('../database/videos');
 const {channelIds} = require('../config.js');
+const {parseString} = require ('xml2js');
 
 const youtube = google.youtube({
   version: 'v3',
@@ -33,8 +34,7 @@ const getChannelDoc = async (id)=>{
     type: 'channel',
   }
   return vtuberInfo;
-}
-
+};
 const getChannelDocByUsername = async (username)=>{
   const ytResult = await youtube.channels.list({
     part: 'snippet,contentDetails,statistics',
@@ -54,8 +54,7 @@ const getChannelDocByUsername = async (username)=>{
     type: 'user',
   }
   return vtuberInfo;
-}
-
+};
 const getPlayListItemByPlayListId = async (playlistId, maxResults=10, pageToken='')=>{
   const ytResult = await youtube.playlistItems.list({
     part: 'snippet,contentDetails',
@@ -64,20 +63,29 @@ const getPlayListItemByPlayListId = async (playlistId, maxResults=10, pageToken=
     pageToken,
   })
   return ytResult.data.items;
-}
+};
 
-const getLiveVideoId = async (channelId) => {
-  const findVideoRegex = /<yt:videoId>(.*?)<\/yt:videoId>\s+\S+\s+<title>(.*?)<\/title>/gim;
-  const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
-    params: {
-      channel_id: channelId,
-      t: Date.now(),
-    },
+
+const getLiveVideoIds = async (channelId)=>{
+  const ytResult = (await youtube.search.list({
+    part: 'snippet',
+    channelId,
+    maxResults: 5,
+    type: 'video',
+    eventType: 'live',
   })).data;
-  const match = findVideoRegex.exec(result);
-  return match[1];
-}
-
+  return ytResult.items.map(v=>v.id.videoId);
+};
+const getUpcomingVideoIds = async (channelId)=>{
+  const ytResult = (await youtube.search.list({
+    part: 'snippet',
+    channelId,
+    maxResults: 5,
+    type: 'video',
+    eventType: 'live',
+  })).data;
+  return ytResult.items.map(v=>v.id.videoId);
+};
 const getAllOverVideoId = async (playlistId, max, pageToken='', result=[])=>{
   const ytResult = (await youtube.playlistItems.list({
     part: 'snippet, contentDetails',
@@ -93,14 +101,31 @@ const getAllOverVideoId = async (playlistId, max, pageToken='', result=[])=>{
     return getAllOverVideoId(playlistId, max, ytResult.nextPageToken, result);
   }
   return result.map(r=>r.contentDetails.videoId);
-}
+};
+
+const getAllVideoId = async (vtuber, max)=>{
+  let liveVideoIds = [];
+  let upcomingVideoIds = [];
+  let videoIds = [];
+  try { 
+    liveVideoIds = await getLiveVideoIds(vtuber.channelId);
+  } catch (err) {}
+  try { 
+    upcomingVideoIds = await getUpcomingVideoIds(vtuber.channelId);
+  } catch (err) {}
+  try { 
+    videoIds = await getAllOverVideoId(vtuber.uploadsId, max);
+  } catch (err) {}
+  const list = [...liveVideoIds, ...upcomingVideoIds, ...videoIds];
+  return list.filter((d,i)=>list.indexOf(d)===i);
+};
 
 
 const getVideosInfo = async (videoIds, result=[])=>{
   const ids = [...videoIds];
   const targetIds = ids.splice(0, 50);
   const ytResult = (await youtube.videos.list({
-    part: 'snippet,status,contentDetails,liveStreamingDetails',
+    part: 'id,snippet,status,contentDetails,liveStreamingDetails',
     id: targetIds,
     fields: 'items(id,snippet,contentDetails,status/embeddable,liveStreamingDetails)',
     maxResults: targetIds.length, // keep at 50, not VIDEOS_MAX_QUERY
@@ -175,12 +200,7 @@ const initVideosDatabase = async () => {
   const noUpdateVideoId = (await Videos.getAllNone()).map(({videoId})=>videoId);
   const promisses = vtubers.map(async (vtuber)=>{
     if (!vtuber.videoCount) return Promise.resolve();
-    const videoIds = await getAllOverVideoId(vtuber.uploadsId);
-    const liveVideoId = await getLiveVideoId(vtuber.channelId);
-    const i = videoIds.indexOf(liveVideoId);
-    if (i < 0){
-      videoIds.push(liveVideoId)
-    }
+    const videoIds = await getAllVideoId(vtuber);
     const newIds = videoIds.filter((id)=>noUpdateVideoId.indexOf(id) === -1);
     if (newIds.length) {
       const videos = await getVideosInfo(newIds);
@@ -214,17 +234,7 @@ const updateVideosDatabase = async () => {
   const vtubers = await Vtuber.getAll();
   const promisses = vtubers.map(async (vtuber)=>{
     if (!vtuber.videoCount) return Promise.resolve();
-    let videoIds = [];
-    try {
-      videoIds = await getAllOverVideoId(vtuber.uploadsId, 2);
-    } catch (error) {
-      console.log(vtuber.channelId);
-    }
-    const liveVideoId = await getLiveVideoId(vtuber.channelId);
-    const i = videoIds.indexOf(liveVideoId);
-    if (i < 0){
-      videoIds.push(liveVideoId)
-    }
+    const videoIds = await getAllVideoId(vtuber, 2);
     if (videoIds.length) {
       const videos = await getVideosInfo(videoIds);
       return Promise.all(videos.map(async (video)=>{
@@ -240,6 +250,7 @@ const updateVideosDatabase = async () => {
 const checkVideosDatabase = async () => {
   const liveVideo = await Videos.getAllLive();
   const liveVideoId = liveVideo.map(video=>video.videoId);
+  if (liveVideoId.length === 0) return;
   const videos = await getVideosInfo(liveVideoId);
   const videoMap = {};
   videos.forEach((video)=>{

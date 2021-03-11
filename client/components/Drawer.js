@@ -1,0 +1,100 @@
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import { useRouter } from 'next/router'
+import {callApi} from '__dirname/utils/api';
+import { mobileCheck } from '__dirname/utils/mobileCheck';
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import HomeIcon from '@material-ui/icons/Home';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import MovieIcon from '@material-ui/icons/Movie';
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
+import Badge from '@material-ui/core/Badge';
+import { withStyles } from '@material-ui/core/styles';
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -20,
+    top: 15,
+    left: 'calc(100% + -8px)',
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}))(Badge);
+
+export default function myDrawer(props) {
+  const router = useRouter()
+  const { open } = props;
+  const [vtuberCount, setVtuberCount] = useState(0);
+  const [liveCount, setLiveCount] = useState(0);
+  const [upcomingCount, setUpcomingCount] = useState(0);
+  let list = [];
+  if (mobileCheck()) {
+    list = [
+      { text:'首頁', count:0, icon: <HomeIcon/>, url:'/'},
+      { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
+      { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
+      { text:'影片', count:0, icon: <MovieIcon/>, url:'/#old'},
+      { text:'Vtuber', count:0, icon: <AssignmentIndIcon/>, url:'/#vtuber'},
+    ];
+  } else {
+    list = [
+      { text:'直播室', count:0, icon: <OndemandVideoIcon/>, url:'/watch'},
+      { text:'首頁', count:0, icon: <HomeIcon/>, url:'/'},
+      { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
+      { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
+      { text:'影片', count:0, icon: <MovieIcon/>, url:'/#old'},
+      { text:'Vtuber', count:0, icon: <AssignmentIndIcon/>, url:'/#vtuber'},
+    ];
+  }
+
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      // getCount('vtuber/count', setVtuberCount);
+      getCount('videos/liveCount', setLiveCount);
+      getCount('videos/upcomingCount', setUpcomingCount);
+    };
+    fetchData();
+  }, []);
+
+  const gotoUrl = (url) => {
+    props.setChooseTab(url);
+    if (url.indexOf('video')>=0){
+      router.push(url+`_${new Date().getTime()}`);
+    }else{
+      router.push(url);
+    }
+  };
+  const getCount = async (path, set) => {
+    const r = await callApi({path});
+    set(r.count);
+  };
+
+  return (
+    <Drawer
+      className={"drawer"}
+      variant="persistent"
+      anchor="left"
+      open={open}
+    >
+      <List>
+        {list.map(({text, icon, url, count}) => (
+          <ListItem className={url===props.chooseTab?"isTabActive":""} button key={text} onClick={()=>gotoUrl(url)}>
+            <ListItemIcon>{icon}</ListItemIcon>
+            <StyledBadge badgeContent={count} color="secondary">
+              <ListItemText primary={text} />
+            </StyledBadge>
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
+  );
+}

@@ -8,19 +8,43 @@ const theme = createMuiTheme({
     MuiCssBaseline: {
       '@global': {
         html: {
-          height: '100%',
+
         },
         body: {
           height: '100%',
+
           backgroundColor:'#EEE',
         },
         '#__next':{
-          height: '100%',
+          height: '100vh',
+        },
+        '.mainRoot':{
+          display: 'flex',
+          height: `100%`,
+        },
+        '.main0':{
+          height: `100%`,
+          width: `100%`,
+          display: 'flex',
+          transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+          '&.onOpen':{
+            width: 'calc(100% - 250px)',
+            transform: 'translateX(250px)',
+          },
+        },
+        '.MuiDrawer-paper':{
+          width: 250,
+          marginTop: 64,
+        },
+        '.drawerTitle':{
+          height:64,
+          textAlign: 'right',
+          padding: 8,
         },
         '.main':{
           paddingTop: titlebarHeight,
           height: `100%`,
-          display: 'flex',
+          width: '100%', 
         },
         '.page':{
           overflow:'auto',
@@ -35,12 +59,6 @@ const theme = createMuiTheme({
         },
         '.MuiAccordionDetails-root':{
           flexWrap: 'wrap',
-        },
-        '.videoDataPicker':{
-          margin: '0 !important',
-          position: 'absolute !important',
-          right:50,
-          top:8,
         },
         '.loadingYoutube': {
           position: 'absolute',
@@ -107,6 +125,7 @@ const theme = createMuiTheme({
         '.watchRoot': {
           textAlign: 'center',
           width: '100%',
+          height: '100%',
           display: 'flex',
           '& .imgRoot':{
             position: 'relative',
@@ -261,9 +280,125 @@ const theme = createMuiTheme({
             display: 'block',
           }
         },
-
-
-
+        '.indexRoot':{
+          overflow: 'auto',
+          padding:' 0 40px',
+          '& .logoImg':{
+            width: '100%',
+            maxWidth: 400,
+            verticalAlign: 'middle',
+          },
+          '& .titleDiv':{
+            display: 'inline-block',
+            verticalAlign: 'middle',
+          },
+          '& .title':{
+            fontSize: 63,
+            marginTop: 60,
+            '&.mobile':{
+              fontSize: 40,
+              marginTop: 0,
+            },
+          },
+          '& .description':{
+            fontSize: 20,
+          },
+          '& .indexPage':{
+            textAlign: 'center',
+          },
+          '& .youtubeImg':{
+            maxWidth: 250,
+            width: '100%',
+            verticalAlign: 'middle',
+          },
+          '& .twitterImg':{
+            maxWidth: 140,
+            width: '100%',
+            verticalAlign: 'middle',
+            paddingLeft: 40,
+            paddingRight: 40,
+          },
+        },
+        '.vtuberRoot':{
+          height: '100%',
+          overflow: 'auto',
+          padding:'40px',
+          width: '100%',
+        },
+        '.titleBarRoot':{
+          position: 'fixed',
+          width: '100%',
+          height: 64,
+          backgroundColor:'white',
+          paddingLeft: 20,
+          '& .logoImg': {
+            height: 64,
+            verticalAlign: 'middle',
+            marginLeft: 24,
+            cursor: 'pointer',
+          },
+          '& .title':{
+            fontSize: 22,
+            fontWeight: 800,
+            verticalAlign: 'middle',
+            cursor: 'pointer',
+            color: 'black'
+          },
+          '& .link':{
+            textDecoration: 'auto',
+          },
+        },
+        '.displayFlex':{
+          display: 'flex',
+        },
+        '.flexWrap':{
+          flexWrap: 'wrap',
+        },
+        '.videoPageRoot':{
+          height: '100%',
+          overflow: 'auto',
+          padding:'40px',
+          width: '100%',
+          '& .videoTitle':{
+            position: 'relative',
+            display: 'flex',
+            fontSize: 20,
+            fontWeight: 800,
+            marginTop:100,
+            marginBottom:15,
+            '&.first':{
+              marginTop:0,
+            },
+            '&::after':{
+              content:'""',
+              display: 'block',
+              flex:1,
+              borderTop: '1px solid #AAA',
+              position: 'relative',
+              top:14,
+              marginLeft: 5,
+            },
+            '&::before':{
+              content:'""',
+              display: 'block',
+              flex:1,
+              borderTop: '1px solid #AAA',
+              position: 'relative',
+              top:14,
+              marginRight: 5,
+            },
+          },
+        },
+        '.isTabActive':{
+          backgroundColor: '#EEE !important',
+        },
+        '.vtuberList':{
+          paddingTop: 20,
+          '&>div':{
+            display: 'flex',
+            flexWrap: 'wrap',
+          }
+        },
       },
     },
   },

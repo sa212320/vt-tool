@@ -4,12 +4,13 @@ import PropTypes from "prop-types";
 import { useRouter } from 'next/router'
 import { withStyles } from "@material-ui/core/styles";
 import { setWatchVideo } from "../utils/localStorage";
+import { mobileCheck } from '__dirname/utils/mobileCheck';
 
 const styles = theme => ({
   root:{
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    minWidth: 250,
+    minWidth: 200,
     textAlign: 'center',
     display: 'inline-block',
     flex: 1,
@@ -88,9 +89,18 @@ const styles = theme => ({
 const VideoImg = (props) => {
   const router = useRouter()
   const { classes } = props;
+
+
+
   const watchVideo = ()=>{
     setWatchVideo(props.video);
-    router.push(`/watch#${props.video.videoId}`)
+    setTimeout(()=>{
+      if (mobileCheck()) {
+        window.open(`https://www.youtube.com/watch?v=${props.video.videoId}`);
+      } else {
+        router.push(`/watch`)
+      }
+    });
   };
   if (props.video) {
     const publishedAt = props.video&&moment(props.video.publishedAt).format('YYYY/MM/DD HH:mm:ss');

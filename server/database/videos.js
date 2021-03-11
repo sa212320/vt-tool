@@ -63,7 +63,9 @@ Videos.getAllNone = async function (){
 Videos.getAllLive = async function (){
   const results = await this.findAll({
     where: {
-      liveBroadcastContent: 'live',
+      [Op.not]: {
+        liveBroadcastContent:'none',
+      },
     }
   });
   return results.map(d=>d.dataValues);

@@ -1,41 +1,24 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Link from 'next/link'
+import Link from 'next/link';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'fixed',
-    width: '100%',
-    height: 64,
-    backgroundColor:'white',
-  },
-  logoImg: {
-    height: 64,
-    verticalAlign: 'middle',
-    marginLeft: 24,
-    cursor: 'pointer',
-  },
-  title:{
-    fontSize: 22,
-    fontWeight: 800,
-    verticalAlign: 'middle',
-    cursor: 'pointer',
-    color: 'black'
-  },
-  link:{
-    textDecoration: 'auto',
-  },
-}));
-
-export default function MenuAppBar() {
-  const classes = useStyles();
-
+export default function MenuAppBar(props) {
+  const onOpen = props.onOpen;
   return (
-    <div className={classes.root} >
+    <div className={'titleBarRoot'} >
+      <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={onOpen}
+          edge="start"
+        >
+          <MenuIcon />
+      </IconButton>
       <Link href="/"> 
-        <a className={classes.link}>
-          <img className={classes.logoImg}  src={'/DVD.png'}></img>
-          <span className={classes.title} >Vt Tools</span>
+        <a className={'link'}>
+          <img className={'logoImg'}  src={'/DVD.png'}></img>
+          <span className={'title'} >Vt Tools</span>
         </a>
       </Link>
     </div>

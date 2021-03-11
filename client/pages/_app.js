@@ -4,9 +4,17 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider  } from "@material-ui/core/styles";
 import theme from "__dirname/styles/theme.js";
 import TitleBar from "__dirname/components/TitleBar.js";
+import Drawer from "__dirname/components/Drawer.js";
+import Head from 'next/head'
+
+global.videoIdMap = {};
+global.searchVideos = [];
+global.videos = [];
 
 const MyApp = ({ Component, pageProps}) => {
   const [vtubers, setVtubers] = useState({});
+  const [open, setOpen] = useState(true);
+  const [chooseTab, setChooseTab] = useState('/');
   useEffect(()=>{
     const fetchData = async () => {
       const vtubers = await callApi({path:'vtuber'});
@@ -14,6 +22,14 @@ const MyApp = ({ Component, pageProps}) => {
     };
     fetchData();
   }, []);
+  if (process.browser) {
+    useEffect(()=>{
+      setTimeout(()=>{
+        const pathname = window.location.pathname+window.location.hash.split('_')[0];
+        setChooseTab(pathname);
+      })
+    }, [window.location.pathname, window.location.hash]);
+  }
 
   const updateVtuber = (vtubers) =>{
     const mapping = {};
@@ -21,14 +37,26 @@ const MyApp = ({ Component, pageProps}) => {
       mapping[vtuber.channelId] = vtuber;
     });
     setVtubers(mapping);
-  }
+  };
+  const onChangeTab = (tab) => {
+    setChooseTab(tab);
+  };
 
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>Vt-Tools</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <CssBaseline />
-      <TitleBar/>
-      <div className="main">
-        <Component {...pageProps} vtubers={vtubers} updateVtuber={updateVtuber}/>
+      <div className="mainRoot">
+        <TitleBar onOpen={()=>setOpen(!open)}/>
+        <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={setChooseTab}/>
+        <div className={`main0 ${open&&'onOpen'}`}>
+          <div className="main">
+            <Component {...pageProps} vtubers={vtubers} updateVtuber={updateVtuber} onChangeTab={onChangeTab}/>
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   )

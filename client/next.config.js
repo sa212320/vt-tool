@@ -2,7 +2,6 @@ const path=require('path')
 module.exports = {
 /* config options here */
   webpack(config){
-
     Object.assign(config.resolve.alias, {
       "__dirname": path.join(__dirname),
     });

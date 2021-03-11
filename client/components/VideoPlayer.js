@@ -8,7 +8,6 @@ const styles = theme => ({
 
 const VideoPlayer = (props) => {
   const { classes } = props;
-  console.log(props.videoId)
   if (props.videoId) {
     const src = `https://www.youtube.com/embed/${props.videoId}`;
     return (
@@ -17,9 +16,9 @@ const VideoPlayer = (props) => {
           width="560" 
           height="315" 
           src={src}
-          frameborder="0" 
+          frameBorder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
+          allowFullScreen>
         </iframe>
       </div>
     )

@@ -5,6 +5,7 @@ import {callApi} from '__dirname/utils/api';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import _ from'lodash';
 import moment from'moment';
+import { setWatchVideo, getWatchVideo, setIds } from "../utils/localStorage";
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -13,12 +14,13 @@ import Count from "__dirname/components/Count.js";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SearchIcon from '@material-ui/icons/Search';
 
-export default function Watch(props) {
-  console.log(props)
-  props.ids = props.ids||[];
-  props.videoIdMap = props.videoIdMap||{};
-  props.searchVideos = props.searchVideos||[];
-  props.videos = props.videos||[];
+export default function Watch(propss) {
+  let props = Object.assign({}, propss);
+  let ids = getWatchVideo();
+
+  global.videoIdMap = global.videoIdMap||{};
+  global.searchVideos = global.searchVideos||[];
+  global.videos = global.videos||[];
   const vtubers = props.vtubers;
   const [tab, setTab] = useState('video');
   const [isLoad, setIsLoad] = useState(false);
@@ -44,36 +46,34 @@ export default function Watch(props) {
     if (isLoad) return;
     setIsLoad(true);
     if (!process.browser) return;
-    const id = window.location.hash;
-    props.ids = id.replace(/#/, '').split(',').filter(d=>d);
-    await getWatchVideos(props.ids);
+    await getWatchVideos(ids);
     await getLiveVideos();
-    props.ids = props.ids.filter(id=>props.videoIdMap[id]);
-    window.location.hash = `#${props.ids.join(',')}`;
+    ids = ids.filter(id=>global.videoIdMap[id]);
+    setIds(ids)
     await getLeftVideo();
-    setChatLL(props.ids);
+    setChatLL(ids);
     setIsLoad(false);
 
   };
   const watchVideo = (video)=>{
     video.noChoose = !video.noChoose;
     const videoId = video.videoId
-    if (props.ids.includes(videoId)) {
-      props.ids = props.ids.filter(id=>id!=videoId);
+    if (ids.includes(videoId)) {
+      ids = ids.filter(id=>id!=videoId);
     } else {
-      props.ids = [...props.ids, videoId];
+      ids = [...ids, videoId];
     }
-    window.location.hash = `#${props.ids.join(',')}`;
+    setIds(ids)
     setVtuberList(vtubers);
     getLeftVideo(vtubers);
-    setChatLL(props.ids);
+    setChatLL(ids);
   };
   const setChatLL = (ids) => {
     if (ids.length) {
       if (!chatId) {
         const chatId = ids[0];
         setChatId(chatId)
-        const chooseVideo = ids.map(id=>props.videoIdMap[id]);
+        const chooseVideo = ids.map(id=>global.videoIdMap[id]);
         const chatroomL = chooseVideo.map((video)=>{
           const vtuber = vtubers[video.channelId];
           video.noChoose = video.videoId!==chatId;
@@ -88,7 +88,7 @@ export default function Watch(props) {
   const chatVideo = (video)=>{
     setChatId(video.videoId);
     const chatId = video.videoId;
-    const chooseVideo = props.ids.map(id=>props.videoIdMap[id]);
+    const chooseVideo = ids.map(id=>global.videoIdMap[id]);
     const chatroomL = chooseVideo.map((video)=>{
       const vtuber = vtubers[video.channelId];
       video.noChoose = video.videoId!==chatId;
@@ -97,22 +97,24 @@ export default function Watch(props) {
     setChatroomList(chatroomL)
   };
   const getWatchVideos = async (ids)=>{
-    const params = {ids};
-    const videos = await callApi({path:'videos/ids', params});
-    videos.forEach((video)=>{
-      props.videoIdMap[video.videoId] = video;
-    });
+    if (ids.length) {
+      const params = {ids};
+      const videos = await callApi({path:'videos/ids', params});
+      videos.forEach((video)=>{
+        global.videoIdMap[video.videoId] = video;
+      });
+    }
   };
 
   const getLeftVideo = () => {
-    const watchVideo = props.ids.map((id)=>{
-      return props.videoIdMap[id];
+    const watchVideo = ids.map((id)=>{
+      return global.videoIdMap[id];
     }).filter(v=>v);
     setPlayList(watchVideo.map(video=>leftPlayListParser(video)));
   };
   const leftPlayListParser = (video) => {
     const url = `https://www.youtube.com/embed/${video.videoId}`;
-    const count = props.ids.length;
+    const count = ids.length;
     return (
       <div className={`videoRoot count${count}`} key={video.videoId}>
         <div className="loadingYoutube loadingYtc">
@@ -126,9 +128,9 @@ export default function Watch(props) {
           width="560"
           height="315" 
           src={url}
-          frameborder="0" 
+          frameBorder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen
+          allowFullScreen
         ></iframe>
       </div>
     );
@@ -136,18 +138,18 @@ export default function Watch(props) {
 
 
   const getLiveVideos = async () => {
-    props.videos = await callApi({path:'videos/live'});
-    props.videos.forEach((video)=>{
-      props.videoIdMap[video.videoId] = video;
+    global.videos = await callApi({path:'videos/live'});
+    global.videos.forEach((video)=>{
+      global.videoIdMap[video.videoId] = video;
     });
     setVtuberList(vtubers);
   };
   const setVtuberList = (vtuberMapping) => {
-    const group = _.groupBy(props.videos, (v)=>v.liveBroadcastContent);
+    const group = _.groupBy(global.videos, (v)=>v.liveBroadcastContent);
     if (group.live) {
       const l = group.live.map((video)=>{
         const vtuber = vtuberMapping[video.channelId];
-        video.noChoose = !props.ids.includes(video.videoId);
+        video.noChoose = !ids.includes(video.videoId);
         return rightPlayListParser(video, vtuber)
       });
       setLiveVideoList(l);
@@ -155,22 +157,22 @@ export default function Watch(props) {
     if (group.upcoming) {
       const l = group.upcoming.map((video)=>{
         const vtuber = vtuberMapping[video.channelId];
-        video.noChoose = !props.ids.includes(video.videoId);
+        video.noChoose = !ids.includes(video.videoId);
         return rightPlayListParser(video, vtuber)
       });
       setUpcomingVideoList(l);
     }
-    props.searchVideos.forEach((video)=>{
-      props.videoIdMap[video.videoId] = video;
+    global.searchVideos.forEach((video)=>{
+      global.videoIdMap[video.videoId] = video;
     });
-    const l2 = props.searchVideos.map((video)=>{
+    const l2 = global.searchVideos.map((video)=>{
       const vtuber = vtubers[video.channelId];
-      video.noChoose = !props.ids.includes(video.videoId);
+      video.noChoose = !ids.includes(video.videoId);
       return rightPlayListParser(video, vtuber)
     });
     setOtherVideoList(l2);
 
-    const chooseVideo = props.ids.map(id=>props.videoIdMap[id]);
+    const chooseVideo = ids.map(id=>global.videoIdMap[id]);
     const l = chooseVideo.map((video)=>{
       const vtuber = vtuberMapping[video.channelId];
       video.noChoose = false;
@@ -188,7 +190,7 @@ export default function Watch(props) {
   const rightPlayListParser = (video, vtuber) => {
     return (
       <div className="imgRoot" onClick={()=>watchVideo(video)} key={video.videoId+video.noChoose}>
-        <img className={`${'rightPlayVideo'} ${!video.noChoose&&'rightPlayVideoActice'}`} src={video.photo}/>
+        <img className={`${'rightPlayVideo'} ${!video.noChoose?'rightPlayVideoActice':''}`} src={video.photo}/>
         {vtuber&&<img className={'vtuber'} src={vtuber.photo}/>}
         {(!video.noChoose&&<CheckIcon className={'checkIcon'}/>)}
         {video.liveBroadcastContent==='upcoming'&&(
@@ -204,7 +206,7 @@ export default function Watch(props) {
   const chatroomListParser = (video) => {
     return (
       <div className={'imgRoot'} onClick={()=>chatVideo(video)} key={video.videoId+video.noChoose}>
-        <img className={`${'rightPlayVideoChat'} ${!video.noChoose&&'rightPlayVideoActice'}`} src={video.photo}/>
+        <img className={`${'rightPlayVideoChat'} ${!video.noChoose?'rightPlayVideoActice':''}`} src={video.photo}/>
         {(!video.noChoose&&<CheckIcon className={'checkIcon'}/>)}
       </div>
     );
@@ -223,13 +225,13 @@ export default function Watch(props) {
     if (isLoad) return;
     setIsLoad(true);
     const params = {searchText};
-    props.searchVideos = await callApi({path:'videos/search', params, data:params});
-    props.searchVideos.forEach((video)=>{
-      props.videoIdMap[video.videoId] = video;
+    global.searchVideos = await callApi({path:'videos/search', params, data:params});
+    global.searchVideos.forEach((video)=>{
+      global.videoIdMap[video.videoId] = video;
     });
-    const l = props.searchVideos.map((video)=>{
+    const l = global.searchVideos.map((video)=>{
       const vtuber = vtubers[video.channelId];
-      video.noChoose = !props.ids.includes(video.videoId);
+      video.noChoose = !window.ids.includes(video.videoId);
       return rightPlayListParser(video, vtuber)
     });
     setOtherVideoList(l);
@@ -244,9 +246,9 @@ export default function Watch(props) {
         </div>
         <div className={'right'}>
           <div className={'rightTab'}>
-            <div onClick={()=>setTab('video')} className={tab==='video'&&'choose'}>影片</div>
-            <div onClick={()=>setTab('chatroom')} className={tab==='chatroom'&&'choose'}>聊天室</div>
-            {/* <div onClick={()=>setTab('discord')} className={tab==='discord'&&'choose'}>Discord</div> */}
+            <div onClick={()=>setTab('video')} className={tab==='video'?'choose':''}>影片</div>
+            <div onClick={()=>setTab('chatroom')} className={tab==='chatroom'?'choose':''}>聊天室</div>
+            {/* <div onClick={()=>setTab('discord')} className={tab==='discord'?'choose':''}>Discord</div> */}
           </div>
           {tab==='video'&&(
             <div>
@@ -332,9 +334,9 @@ export default function Watch(props) {
                 <iframe 
                   className="ytc"
                   src={'https://www.youtube.com/live_chat?v='+chatId+'&embed_domain=localhost'}
-                  frameborder="0" 
+                  frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen
+                  allowFullScreen
                 ></iframe>
               </div>
             </div>

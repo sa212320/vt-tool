@@ -14,7 +14,7 @@ const initDb = async () => {
   try {
     await db.authenticate();
     console.log('Connect DB'.green);
-    await db.sync({alter: true});
+    await db.sync({alter: false});
     console.log('Sync Successfully'.green);
   } catch (err) {
     console.log(err);

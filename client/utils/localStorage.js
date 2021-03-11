@@ -5,7 +5,7 @@ const setWatchVideo = (video) =>{
     if (i === -1) {
       videos.push(video.videoId);
     } else {
-      videos.splice(i, 1);
+      // videos.splice(i, 1);
     }
     window.localStorage.setItem('WatchVideo', JSON.stringify(videos));
   }
@@ -21,4 +21,10 @@ const getWatchVideo = () =>{
   return [];
 };
 
-export {setWatchVideo, getWatchVideo};
+const setIds = (ids) =>{
+  if (process.browser) {
+    window.localStorage.setItem('WatchVideo', JSON.stringify(ids));
+  }
+};
+
+export {setWatchVideo, getWatchVideo, setIds};

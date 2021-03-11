@@ -22,7 +22,6 @@ const initDb = async () => {
   }
 };
 
-
 initDb().then(()=>{
   initCronJob();
   initServer(app);

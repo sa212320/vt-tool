@@ -47,7 +47,6 @@ export default function AllVideos(props) {
     videos = videos.sort((a, b)=>{
       return b.publishedAt - a.publishedAt;
     });
-    console.log(videos)
     setVtuberList(props.vtubers);
   }
   const stopPropagation = (e)=>{

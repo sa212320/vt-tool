@@ -40,7 +40,7 @@ router.get('/live', async (req, res)=>{
     order: [
       ['liveTime', 'DESC'],
     ],
-  });;
+  });
   return res.send(sortVideo(result));
 });
 
@@ -68,6 +68,24 @@ router.get('/ids', async (req, res)=>{
   });
 
   return res.send(sortVideo(result));
+});
+
+router.get('/liveCount', async (req, res)=>{
+  const count = await Videos.count({
+    where: {
+      liveBroadcastContent:'live',
+    },
+  });
+  return res.send({count});
+});
+
+router.get('/upcomingCount', async (req, res)=>{
+  const count = await Videos.count({
+    where: {
+      liveBroadcastContent:'upcoming',
+    },
+  });
+  return res.send({count});
 });
 
 module.exports = router;

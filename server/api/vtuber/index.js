@@ -13,5 +13,10 @@ router.get('/', async (req, res)=>{
   return res.send(result);
 });
 
+router.get('/count', async (req, res)=>{
+  const count = await Vtuber.count();
+  return res.send({count});
+});
+
 
 module.exports = router;

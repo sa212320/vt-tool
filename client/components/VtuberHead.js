@@ -6,16 +6,34 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   head:{
+    minWidth: 240,
+    height: 300,
     padding: theme.spacing(),
     textAlign: 'center',
     display: 'inline-block',
     border: '1px solid',
+    verticalAlign: 'bottom',
+    position:'relative',
+    flex:1,
   },
   headImg: {
     width: 100,
     borderRadius: '50%',
     border: '1px solid',
-  }
+  },
+  headDiv: {
+    width: 220,
+    position:'absolute',
+    top:'50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+  youtube: {
+    width: 80,
+  },
+  youtubeDiv:{
+    marginTop: -13,
+  },
 });
 
 const VtuberHead = (props) => {
@@ -33,14 +51,23 @@ const VtuberHead = (props) => {
 // viewCount: 81180177
   const publishedAt = moment(props.vtuber.publishedAt).format('YYYY/MM/DD');
   return (
+    
     <div className={classes.head}>
-      <img className={classes.headImg} src={props.vtuber.photo}></img>
-      <div>{props.vtuber.name}</div>
-      <div>{props.vtuber.subscriberCount} 位訂閱者</div>
-      <div>{props.vtuber.viewCount} 總觀看次數</div>
-      <div>{props.vtuber.videoCount} 影片數量</div>
-      <div>{publishedAt} 出道時間</div>
-      <a href={'https://www.youtube.com/channel/'+props.vtuber.channelId}>youtube</a>
+      <div className={classes.headDiv}>
+        <img className={classes.headImg} src={props.vtuber.photo}></img>
+        <div className={classes.youtubeDiv}>
+          <a href={'https://www.youtube.com/channel/'+props.vtuber.channelId}>
+            <img className={classes.youtube} src="/youtube.png"></img>
+          </a>
+        </div>
+        <div>{props.vtuber.name}</div>
+        <div>{props.vtuber.subscriberCount} 位訂閱者</div>
+        <div>{props.vtuber.viewCount} 總觀看次數</div>
+        <div>{props.vtuber.videoCount} 影片數量</div>
+        <div>{publishedAt} 出道時間</div>
+
+
+      </div>
     </div>
   )
 };

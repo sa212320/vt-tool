@@ -86,7 +86,6 @@ export default function VtuberTable(props) {
     if (orderBy == id) {
       __order = order=='asc'?'desc':'asc';
     }
-    console.log(id, __order);
     if (id) {
       r = rows.sort((a, b)=>{
         if(typeof a[id] === 'string' && typeof b[id] === 'string') {
