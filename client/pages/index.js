@@ -160,9 +160,9 @@ export default function VideoPage(props) {
           tempTab = tab;
           if (props.onChangeTab){
             if (tempTab) {
-              props.onChangeTab(`/#${tempTab}`)
+              props.onChangeTab(`/#${tempTab}`);
             } else {
-              props.onChangeTab(`/`)
+              props.onChangeTab(`/#`);
             }
           }
         }
@@ -175,15 +175,14 @@ export default function VideoPage(props) {
     <div className="videoPageRoot" ref={scrollElement}>
       <div className={'indexRoot'}>
         <div className={'indexPage'}>
-          <img className={'logoImg'} src={'/DVD.png'}></img>
+          <img className={'logoImg'} src={'/logo.png'}></img>
           <div className={'titleDiv'}>
-            <div className={'title ' + (isMobile?'mobile':'')}>Vt Tools</div>
-            <a href="https://www.youtube.com/channel/UCR3qiQWYf6aVN6eZxXsCnwg/">
-              <img className="youtubeImg" src="/youtube.png"></img>
-            </a>
-            <a href="https://twitter.com/DdVtuber">
-              <img className="twitterImg" src="/twitter.png"></img>
-            </a>
+            <div className={'title ' + (isMobile?'mobile':'')}>
+              <a href="https://discord.gg/TVPC" target="_blank">
+                <img className="discordImg" src="/discord.png"></img>
+                <img className="logoTitleImg" src="/logoTitle.png"></img>
+              </a>
+            </div>
           </div>
         </div>
       </div>

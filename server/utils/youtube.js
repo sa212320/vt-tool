@@ -2,11 +2,13 @@ require('dotenv').config();
 const { google } = require('googleapis');
 const axios = require('axios');
 const moment = require('./moment');
+const {parseString} = require ('xml2js');
 const Channel = require('../database/channel');
 const Vtuber = require('../database/vtuber');
 const Videos = require('../database/videos');
 const {channelIds} = require('../config.js');
-const {parseString} = require ('xml2js');
+
+let youtubeCount = 0;
 
 const youtube = google.youtube({
   version: 'v3',
@@ -14,6 +16,7 @@ const youtube = google.youtube({
 });
 
 const getChannelDoc = async (id)=>{
+  youtubeCount++
   const ytResult = await youtube.channels.list({
     part: 'snippet,contentDetails,statistics',
     id,
@@ -36,6 +39,7 @@ const getChannelDoc = async (id)=>{
   return vtuberInfo;
 };
 const getChannelDocByUsername = async (username)=>{
+  youtubeCount++
   const ytResult = await youtube.channels.list({
     part: 'snippet,contentDetails,statistics',
     forUsername:username,
@@ -56,6 +60,7 @@ const getChannelDocByUsername = async (username)=>{
   return vtuberInfo;
 };
 const getPlayListItemByPlayListId = async (playlistId, maxResults=10, pageToken='')=>{
+  youtubeCount++
   const ytResult = await youtube.playlistItems.list({
     part: 'snippet,contentDetails',
     playlistId,
@@ -66,7 +71,25 @@ const getPlayListItemByPlayListId = async (playlistId, maxResults=10, pageToken=
 };
 
 
+const getLiveVideoIds2 = async (channelId) => {
+  const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
+    params: {
+      channel_id: channelId,
+      t: Date.now(),
+    },
+  })).data;
+  return new Promise((resolve, reject)=>{
+    parseString(result, function (err, result) {
+      if (err) {
+        reject(err);
+      }
+      resolve(result.feed.entry.map(v=>v['yt:videoId']));
+    });
+  });
+};
+
 const getLiveVideoIds = async (channelId)=>{
+  youtubeCount+=100;
   const ytResult = (await youtube.search.list({
     part: 'snippet',
     channelId,
@@ -77,6 +100,7 @@ const getLiveVideoIds = async (channelId)=>{
   return ytResult.items.map(v=>v.id.videoId);
 };
 const getUpcomingVideoIds = async (channelId)=>{
+  youtubeCount+=100;
   const ytResult = (await youtube.search.list({
     part: 'snippet',
     channelId,
@@ -87,6 +111,7 @@ const getUpcomingVideoIds = async (channelId)=>{
   return ytResult.items.map(v=>v.id.videoId);
 };
 const getAllOverVideoId = async (playlistId, max, pageToken='', result=[])=>{
+  youtubeCount++;
   const ytResult = (await youtube.playlistItems.list({
     part: 'snippet, contentDetails',
     playlistId,
@@ -108,13 +133,15 @@ const getAllVideoId = async (vtuber, max)=>{
   let upcomingVideoIds = [];
   let videoIds = [];
   try { 
-    liveVideoIds = await getLiveVideoIds(vtuber.channelId);
+    liveVideoIds = await getLiveVideoIds2(vtuber.channelId);
   } catch (err) {}
+  // try { 
+  //   upcomingVideoIds = await getUpcomingVideoIds(vtuber.channelId);
+  // } catch (err) {}
   try { 
-    upcomingVideoIds = await getUpcomingVideoIds(vtuber.channelId);
-  } catch (err) {}
-  try { 
-    videoIds = await getAllOverVideoId(vtuber.uploadsId, max);
+    if (!max || max>50) {
+      videoIds = await getAllOverVideoId(vtuber.uploadsId, max);
+    }
   } catch (err) {}
   const list = [...liveVideoIds, ...upcomingVideoIds, ...videoIds];
   return list.filter((d,i)=>list.indexOf(d)===i);
@@ -124,6 +151,7 @@ const getAllVideoId = async (vtuber, max)=>{
 const getVideosInfo = async (videoIds, result=[])=>{
   const ids = [...videoIds];
   const targetIds = ids.splice(0, 50);
+  youtubeCount++
   const ytResult = (await youtube.videos.list({
     part: 'id,snippet,status,contentDetails,liveStreamingDetails',
     id: targetIds,
@@ -272,6 +300,11 @@ const checkVideosDatabase = async () => {
   return Promise.all(promisses);
 }
 
+const getYoutubeCount = ()=>{
+  const temp = youtubeCount;
+  youtubeCount = 0;
+  return temp;
+};
 
 module.exports = {
   getChannelDoc, 
@@ -281,5 +314,6 @@ module.exports = {
   updateVtuberDatabase,
   updateVideosDatabase,
   checkVideosDatabase,
+  getYoutubeCount,
   youtube
 };

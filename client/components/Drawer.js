@@ -9,6 +9,9 @@ import { mobileCheck } from '__dirname/utils/mobileCheck';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import EmailIcon from '@material-ui/icons/Email';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 
 import HomeIcon from '@material-ui/icons/Home';
 import VideocamIcon from '@material-ui/icons/Videocam';
@@ -47,7 +50,7 @@ export default function myDrawer(props) {
   } else {
     list = [
       { text:'直播室', count:0, icon: <OndemandVideoIcon/>, url:'/watch'},
-      { text:'首頁', count:0, icon: <HomeIcon/>, url:'/'},
+      { text:'首頁', count:0, icon: <HomeIcon/>, url:'/#'},
       { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
       { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
       { text:'影片', count:0, icon: <MovieIcon/>, url:'/#old'},
@@ -67,7 +70,7 @@ export default function myDrawer(props) {
 
   const gotoUrl = (url) => {
     props.setChooseTab(url);
-    if (url.indexOf('video')>=0){
+    if (url.indexOf('#')>=0){
       router.push(url+`_${new Date().getTime()}`);
     }else{
       router.push(url);
@@ -95,6 +98,28 @@ export default function myDrawer(props) {
           </ListItem>
         ))}
       </List>
+      <div className={'indexPageDiscriptions'}>
+        <div>
+          <div>
+          聯絡資訊:
+          </div>
+
+          <div>
+            <EmailIcon></EmailIcon>
+            <a href="dvdvd5566@gamil.com">Email</a>
+          </div>
+          <div>
+            <TwitterIcon></TwitterIcon>
+            <a href="https://twitter.com/DdVtuber">Twitter</a>
+          </div>
+          <div>
+            <YouTubeIcon></YouTubeIcon>
+            <a href="https://www.youtube.com/channel/UCR3qiQWYf6aVN6eZxXsCnwg/">Youtube</a>
+          </div>
+        </div>
+
+        <img className={'dvdImg'} src={'/DVD.png'}></img>
+      </div>
     </Drawer>
   );
 }

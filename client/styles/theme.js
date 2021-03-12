@@ -283,18 +283,22 @@ const theme = createMuiTheme({
         '.indexRoot':{
           overflow: 'auto',
           padding:' 0 40px',
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
           '& .logoImg':{
             width: '100%',
             maxWidth: 400,
             verticalAlign: 'middle',
+            transform: 'translateX(10%)',
           },
           '& .titleDiv':{
-            display: 'inline-block',
+            // display: 'inline-block',
             verticalAlign: 'middle',
           },
           '& .title':{
             fontSize: 63,
-            marginTop: 60,
+            // marginTop: 60,
             '&.mobile':{
               fontSize: 40,
               marginTop: 0,
@@ -305,18 +309,39 @@ const theme = createMuiTheme({
           },
           '& .indexPage':{
             textAlign: 'center',
+            marginRight: 93,
+            marginLeft: 93,
+            minWidth: 200,
           },
+          '& .indexPageDiscriptions':{
+            textAlign: 'left',
+            paddingTop: 80,
+            '&>div':{
+              paddingLeft: 20,
+            }
+          },
+          
           '& .youtubeImg':{
-            maxWidth: 250,
+            maxWidth: 100,
             width: '100%',
             verticalAlign: 'middle',
           },
           '& .twitterImg':{
-            maxWidth: 140,
+            maxWidth: 34,
             width: '100%',
             verticalAlign: 'middle',
-            paddingLeft: 40,
-            paddingRight: 40,
+            margin: 5
+          },
+          '& .discordImg':{
+            width: 64,
+            verticalAlign: 'middle',
+            borderRadius: 10,
+            marginRight: 18,
+            marginLeft: 18,
+          },
+          '& .logoTitleImg':{
+            verticalAlign: 'middle',
+            borderRadius: 10,
           },
         },
         '.vtuberRoot':{
@@ -398,6 +423,50 @@ const theme = createMuiTheme({
             display: 'flex',
             flexWrap: 'wrap',
           }
+        },
+        '.drawer':{
+          '& .indexPageDiscriptions':{
+            textAlign: 'right',
+            position:'absolute',
+            bottom:70,
+            width: '100%',
+            '&>div':{
+              textAlign: 'left',
+              paddingLeft: 93,
+            },
+            '& svg': {
+              verticalAlign: 'middle',
+              marginLeft: 10,
+              marginRight: 10,
+            },
+            '$ a':{
+              verticalAlign: 'middle',
+            },
+          },
+          '& .dvdImg':{
+            width: 81,
+            position: 'absolute',
+            left: 11,
+            top: 5,
+          },
+          '& .youtubeImg':{
+            maxWidth: 100,
+            width: '100%',
+            verticalAlign: 'middle',
+          },
+          '& .twitterImg':{
+            maxWidth: 34,
+            width: '100%',
+            verticalAlign: 'middle',
+            margin: 5
+          },
+          '& .discordImg':{
+            width: 64,
+            verticalAlign: 'middle',
+            borderRadius: 10,
+            marginRight: 18,
+            marginLeft: 18,
+          },
         },
       },
     },

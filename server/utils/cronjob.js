@@ -8,6 +8,7 @@ const {
   updateVtuberDatabase,
   updateVideosDatabase,
   checkVideosDatabase,
+  getYoutubeCount,
 } =  require('./youtube.js');
 
 const initCronJob = async()=>{
@@ -15,29 +16,35 @@ const initCronJob = async()=>{
   const now = moment().format('YYYY/MM/DD HH:mm:ss');
   try {
     await initChannelDatabase();
-    console.log(now, 'initChannelDatabase OK'.green)
     await updateVtuberDatabase();
-    console.log(now,'updateVtuberDatabase OK'.green)
     await initVideosDatabase();
-    console.log(now,'initVideosDatabase OK'.green)
     await checkVideosDatabase();
-    console.log(now,'checkVideosDatabase OK'.green)
+    console.log(now, 'init OK'.green)
   } catch (err) {
     console.log(now.red, err.message);
   }
+  console.log(now.blue,  getYoutubeCount());
 
   cron.schedule('*/2 * * * *', async () => {
     try {
       const now = moment().format('YYYY/MM/DD HH:mm:ss');
-      await updateVtuberDatabase();
-      console.log(now,'Cron updateVtuberDatabase OK'.green)
       await updateVideosDatabase();
-      console.log(now,'Cron updateVideosDatabase OK'.green)
       await checkVideosDatabase();
-      console.log(now,'Cron checkVideosDatabase OK'.green)
+      console.log(now, 'CronMin OK'.green)
     } catch (err) {
       console.log(now.red, err.message);
     }
+    console.log(now.green,  getYoutubeCount());
+  });
+  cron.schedule('0 * * * *', async () => {
+    try {
+      const now = moment().format('YYYY/MM/DD HH:mm:ss');
+      await updateVtuberDatabase();
+      console.log(now, 'CronHour OK'.green)
+    } catch (err) {
+      console.log(now.red, err.message);
+    }
+    console.log(now.blue,  getYoutubeCount());
   });
 };
 

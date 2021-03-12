@@ -231,13 +231,17 @@ export default function Watch(propss) {
     });
     const l = global.searchVideos.map((video)=>{
       const vtuber = vtubers[video.channelId];
-      video.noChoose = !window.ids.includes(video.videoId);
+      video.noChoose = !global.ids.includes(video.videoId);
       return rightPlayListParser(video, vtuber)
     });
     setOtherVideoList(l);
     setExpanded(true)
     setIsLoad(false);
   };
+  let url = 'localhost';
+  if (process.browser) {
+    url = window.location.host;
+  }
   return (
     <>
       <div className={'watchRoot'}>
@@ -333,7 +337,7 @@ export default function Watch(propss) {
                 </div>
                 <iframe 
                   className="ytc"
-                  src={'https://www.youtube.com/live_chat?v='+chatId+'&embed_domain=localhost'}
+                  src={'https://www.youtube.com/live_chat?v='+chatId+'&embed_domain='+url}
                   frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                   allowFullScreen

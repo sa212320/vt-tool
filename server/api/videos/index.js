@@ -54,7 +54,7 @@ router.get('/search', async (req, res)=>{
         {description:query},
       ]
     },
-    limit: 100,
+    limit: 50,
   });
   return res.send(result);
 });
