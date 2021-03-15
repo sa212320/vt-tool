@@ -155,7 +155,7 @@ export default function Watch(propss) {
       setLiveVideoList(l);
     }
     if (group.upcoming) {
-      const l = group.upcoming.map((video)=>{
+      const l = group.upcoming.sort((a,b)=>a.liveTime - b.liveTime).map((video)=>{
         const vtuber = vtuberMapping[video.channelId];
         video.noChoose = !ids.includes(video.videoId);
         return rightPlayListParser(video, vtuber)

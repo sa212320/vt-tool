@@ -45,16 +45,20 @@ router.get('/live', async (req, res)=>{
 });
 
 router.get('/search', async (req, res)=>{
-  const query = {[Op.like]: `%${req.query.searchText}%`};
+  const searchTexts = req.query.searchText.split(/[\s,]/);
+  const query = searchTexts.map(t=>{
+    return {
+      title: {[Op.like]: `%${t}%`},
+    };
+  });
   const result = await Videos.findAll({
     where: {
-      [Op.or]: [
-        {tags:query},
-        {title:query},
-        {description:query},
-      ]
+      [Op.and]: query,
     },
-    limit: 50,
+    limit: 100,
+    order: [
+      ['publishedAt', 'DESC'],
+    ],
   });
   return res.send(result);
 });

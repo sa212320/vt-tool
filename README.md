@@ -9,8 +9,8 @@ npm run dev
 
 ## Deploy
 
-sudo forever stop server2.js
 git fetch
+sudo forever stop server2.js
 git reset --hard origin/main
 npm run build
 npm run export
