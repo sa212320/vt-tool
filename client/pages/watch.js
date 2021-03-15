@@ -80,8 +80,8 @@ export default function Watch(propss) {
     if (ids.length) {
       if (!chatId) {
         const chatId = ids[0];
-        setChatId(chatId)
-        const chooseVideo = ids.map(id=>global.videoIdMap[id]);
+        setChatId(chatId);
+        const chooseVideo = ids.map(id=>global.videoIdMap[id]).filter(v=>v);
         const chatroomL = chooseVideo.map((video)=>{
           const vtuber = vtubers[video.channelId];
           video.noChoose = video.videoId!==chatId;
@@ -96,7 +96,7 @@ export default function Watch(propss) {
   const chatVideo = (video)=>{
     setChatId(video.videoId);
     const chatId = video.videoId;
-    const chooseVideo = ids.map(id=>global.videoIdMap[id]);
+    const chooseVideo = ids.map(id=>global.videoIdMap[id]).filter(v=>v);
     const chatroomL = chooseVideo.map((video)=>{
       const vtuber = vtubers[video.channelId];
       video.noChoose = video.videoId!==chatId;
@@ -157,7 +157,7 @@ export default function Watch(propss) {
   const setVtuberList = (vtuberMapping) => {
     const group = _.groupBy(global.videos, (v)=>v.liveBroadcastContent);
     if (group.live) {
-      const l = group.live.map((video)=>{
+      const l = group.live.filter(v=>v).map((video)=>{
         const vtuber = vtuberMapping[video.channelId];
         video.noChoose = !ids.includes(video.videoId);
         return rightPlayListParser(video, vtuber)
@@ -165,7 +165,7 @@ export default function Watch(propss) {
       setLiveVideoList(l);
     }
     if (group.upcoming) {
-      const l = group.upcoming.sort((a,b)=>a.liveTime - b.liveTime).map((video)=>{
+      const l = group.upcoming.filter(v=>v).sort((a,b)=>a.liveTime - b.liveTime).map((video)=>{
         const vtuber = vtuberMapping[video.channelId];
         video.noChoose = !ids.includes(video.videoId);
         return rightPlayListParser(video, vtuber)
@@ -175,14 +175,14 @@ export default function Watch(propss) {
     global.searchVideos.forEach((video)=>{
       global.videoIdMap[video.videoId] = video;
     });
-    const l2 = global.searchVideos.map((video)=>{
+    const l2 = global.searchVideos.filter(v=>v).map((video)=>{
       const vtuber = vtubers[video.channelId];
       video.noChoose = !ids.includes(video.videoId);
       return rightPlayListParser(video, vtuber)
     });
     setOtherVideoList(l2);
 
-    const chooseVideo = ids.map(id=>global.videoIdMap[id]);
+    const chooseVideo = ids.map(id=>global.videoIdMap[id]).filter(v=>v);
     const l = chooseVideo.map((video)=>{
       const vtuber = vtuberMapping[video.channelId];
       video.noChoose = false;
@@ -270,7 +270,7 @@ export default function Watch(propss) {
     global.searchDateVideos.forEach((video)=>{
       global.videoIdMap[video.videoId] = video;
     });
-    const l = global.searchDateVideos.map((video)=>{
+    const l = global.searchDateVideos.filter(v=>v).map((video)=>{
       const vtuber = vtubers[video.channelId];
       video.noChoose = !ids.includes(video.videoId);
       return rightPlayListParser(video, vtuber)
