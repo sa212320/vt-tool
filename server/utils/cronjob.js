@@ -24,7 +24,6 @@ const initCronJob = async()=>{
     console.log(now.red, err.message);
   }
   console.log(now.blue,  getYoutubeCount());
-
   cron.schedule('*/2 * * * *', async () => {
     try {
       const now = moment().format('YYYY/MM/DD HH:mm:ss');

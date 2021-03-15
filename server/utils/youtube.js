@@ -87,29 +87,45 @@ const getLiveVideoIds2 = async (channelId) => {
     });
   });
 };
+const getNewVideos = async (channelId) => {
+  const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
+    params: {
+      channel_id: channelId,
+      t: Date.now(),
+    },
+  })).data;
+  return new Promise((resolve, reject)=>{
+    parseString(result, function (err, result) {
+      if (err) {
+        reject(err);
+      }
+      resolve(result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})));
+    });
+  });
+};
 
-const getLiveVideoIds = async (channelId)=>{
-  youtubeCount+=100;
-  const ytResult = (await youtube.search.list({
-    part: 'snippet',
-    channelId,
-    maxResults: 5,
-    type: 'video',
-    eventType: 'live',
-  })).data;
-  return ytResult.items.map(v=>v.id.videoId);
-};
-const getUpcomingVideoIds = async (channelId)=>{
-  youtubeCount+=100;
-  const ytResult = (await youtube.search.list({
-    part: 'snippet',
-    channelId,
-    maxResults: 5,
-    type: 'video',
-    eventType: 'live',
-  })).data;
-  return ytResult.items.map(v=>v.id.videoId);
-};
+// const getLiveVideoIds = async (channelId)=>{
+//   youtubeCount+=100;
+//   const ytResult = (await youtube.search.list({
+//     part: 'snippet',
+//     channelId,
+//     maxResults: 5,
+//     type: 'video',
+//     eventType: 'live',
+//   })).data;
+//   return ytResult.items.map(v=>v.id.videoId);
+// };
+// const getUpcomingVideoIds = async (channelId)=>{
+//   youtubeCount+=100;
+//   const ytResult = (await youtube.search.list({
+//     part: 'snippet',
+//     channelId,
+//     maxResults: 5,
+//     type: 'video',
+//     eventType: 'live',
+//   })).data;
+//   return ytResult.items.map(v=>v.id.videoId);
+// };
 const getAllOverVideoId = async (playlistId, max, pageToken='', result=[])=>{
   youtubeCount++;
   const ytResult = (await youtube.playlistItems.list({
@@ -262,11 +278,20 @@ const updateVideosDatabase = async () => {
   const vtubers = await Vtuber.getAll();
   const promisses = vtubers.map(async (vtuber)=>{
     if (!vtuber.videoCount) return Promise.resolve();
-    const videoIds = await getAllVideoId(vtuber, 2);
+    const originVideoIds = await getNewVideos(vtuber.channelId);
+    const publishedAt = Math.min(...originVideoIds.map(v=>moment(v.published[0]).valueOf()));
+    const exitVideos = await Videos.getVideoByChannelID(vtuber.channelId, publishedAt);
+    const exitVideoId = {};
+    exitVideos.forEach(({videoId})=>{
+      exitVideoId[videoId] = true;
+    });
+    const videoIds = [];
+    originVideoIds.forEach(({id})=>{
+      if (!exitVideoId[id]) videoIds.push(id);
+    });
     if (videoIds.length) {
       const videos = await getVideosInfo(videoIds);
       return Promise.all(videos.map(async (video)=>{
-        const info = videoParser(video);
         return Videos.upsert(info);
       }));
     }

@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build ./client",
-    "start": "next start ./client",
+    "start": "node server",
     "export": "next export ./client"
   },
   "dependencies": {

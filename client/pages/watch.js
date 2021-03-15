@@ -21,7 +21,7 @@ export default function Watch(propss) {
   global.videoIdMap = global.videoIdMap||{};
   global.searchVideos = global.searchVideos||[];
   global.videos = global.videos||[];
-  const vtubers = props.vtubers;
+  const vtubers = props.vtubers||{};
   const [tab, setTab] = useState('video');
   const [isLoad, setIsLoad] = useState(false);
   const [playList, setPlayList] = useState();
@@ -231,7 +231,7 @@ export default function Watch(propss) {
     });
     const l = global.searchVideos.map((video)=>{
       const vtuber = vtubers[video.channelId];
-      video.noChoose = !global.ids.includes(video.videoId);
+      video.noChoose = !ids.includes(video.videoId);
       return rightPlayListParser(video, vtuber)
     });
     setOtherVideoList(l);
