@@ -207,7 +207,11 @@ const videoParser = (videoDoc)=>{
     saveInfo.liveBroadcastContent = 'live';
   } else if (data.live_schedule) {
     if (moment().isSameOrAfter(scheduleMoment)) {
-      saveInfo.liveBroadcastContent = 'live';
+      if (moment().diff(scheduleMoment, 'hours', true) > 0.25) {
+        saveInfo.liveBroadcastContent = 'delete';
+      }else{
+        saveInfo.liveBroadcastContent = 'live';
+      }
     } else {
       saveInfo.liveBroadcastContent = 'upcoming';
     }
@@ -250,6 +254,13 @@ const initVideosDatabase = async () => {
       const videos = await getVideosInfo(newIds);
       return Promise.all(videos.map(async (video)=>{
         const info = videoParser(video);
+        if (info.liveBroadcastContent === 'delete') {
+          return Videos.destroy({
+            where: {
+              videoId:video.videoId
+            }
+          });
+        }
         return Videos.upsert(info);
       }));
     }
@@ -292,6 +303,14 @@ const updateVideosDatabase = async () => {
     if (videoIds.length) {
       const videos = await getVideosInfo(videoIds);
       return Promise.all(videos.map(async (video)=>{
+        const info = videoParser(video);
+        if (info.liveBroadcastContent === 'delete') {
+          return Videos.destroy({
+            where: {
+              videoId:video.videoId
+            }
+          });
+        }
         return Videos.upsert(info);
       }));
     }
@@ -313,6 +332,13 @@ const checkVideosDatabase = async () => {
     const doc = videoMap[video.videoId];
     if (doc) {
       const info = videoParser(doc);
+      if (info.liveBroadcastContent === 'delete') {
+        return Videos.destroy({
+          where: {
+            videoId:video.videoId
+          }
+        });
+      }
       return Videos.upsert(info);
     } else {
       return Videos.destroy({
