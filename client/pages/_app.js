@@ -51,8 +51,11 @@ const MyApp = ({ Component, pageProps}) => {
   return (
     <ThemeProvider theme={theme}>
       <Head>
-        <title>Vt-Tools</title>
+        <title>台姬殿 Vt-Tools</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content="這裡有很多台灣 Vtuber 喔~"></meta>
+        <link rel="icon" href="/logo.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/logo.ico" type="image/x-icon" />
       </Head>
       <CssBaseline />
       <div className="mainRoot">
