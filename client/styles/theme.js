@@ -468,6 +468,29 @@ const theme = createMuiTheme({
             marginLeft: 18,
           },
         },
+        '.allVideoText':{
+          '& .searchInputDiv':{
+            '&>*':{
+              verticalAlign: 'middle',
+            },
+            '&>span':{
+              border: '1px solid',
+              display: 'inline-block',
+              height: 24,
+              borderWidth: '1px 1px 1px 0px',
+              backgroundColor: 'papayawhip',
+              borderTopRightRadius: 3,
+              borderBottomRightRadius: 3
+            },
+          },
+          '& .searchInput':{
+            border: '1px solid',
+            width: 200,
+            height: 24,
+            borderTopLeftRadius: 3,
+            borderBottomLeftRadius: 3
+          },
+        }
       },
     },
   },

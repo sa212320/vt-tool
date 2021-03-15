@@ -5,6 +5,7 @@ import moment from'moment';
 import Vtuber from "__dirname/components/Vtuber.js";
 import VideoImg from "__dirname/components/VideoImg.js";
 import AllVideosL from "__dirname/components/AllVideosL.js";
+import AllVideosText from "__dirname/components/AllVideosText.js";
 import { mobileCheck } from '__dirname/utils/mobileCheck';
 
 export default function VideoPage(props) {
@@ -13,6 +14,7 @@ export default function VideoPage(props) {
   const liveRef = useRef();
   const upcomingRef = useRef();
   const oldRef = useRef();
+  const oldDateRef = useRef();
   const scrollElement = useRef();
   const deltHeight = 0;
   const isMobile = mobileCheck();
@@ -84,9 +86,12 @@ export default function VideoPage(props) {
       })
     }
     result.push(<div ref={oldRef} key={'oldRef'}></div>);
-    result.push(titleBar('影片'));
+    result.push(titleBar('影片(日期)'));
     result.push(<AllVideosL vtubers={props.vtubers} key={'oldVideo'}></AllVideosL>);
-
+    result.push(<div ref={oldDateRef} key={'oldDateRef'}></div>);
+    result.push(titleBar('影片(關鍵字)'));
+    result.push(<AllVideosText vtubers={props.vtubers} key={'oldDateVideo'}></AllVideosText>);
+    
     
     result.push(<div ref={vtuberRef} key={'vtuberRef'}></div>);
     result.push(titleBar('Vtuber'));
@@ -100,6 +105,7 @@ export default function VideoPage(props) {
         case 'live': return scrollTo(liveRef, 120);
         case 'upcoming': return scrollTo(upcomingRef);
         case 'old': return scrollTo(oldRef);
+        case 'date': return scrollTo(oldDateRef);
         case 'vtuber': return scrollTo(vtuberRef);
       }
       scrollTo();
@@ -128,6 +134,7 @@ export default function VideoPage(props) {
         case 'live': return scrollTo(liveRef, 120);
         case 'upcoming': return scrollTo(upcomingRef);
         case 'old': return scrollTo(oldRef);
+        case 'date': return scrollTo(oldDateRef);
         case 'vtuber': return scrollTo(vtuberRef);
       }
       scrollTo();
@@ -149,6 +156,11 @@ export default function VideoPage(props) {
         if (scrollElement.current && oldRef.current) {
           if (scrollElement.current.scrollTop - (oldRef.current.offsetTop-deltHeight) > 0) {
             tab = 'old';
+          }
+        }
+        if (scrollElement.current && oldDateRef.current) {
+          if (scrollElement.current.scrollTop - (oldDateRef.current.offsetTop-deltHeight) > 0) {
+            tab = 'date';
           }
         }
         if (scrollElement.current && vtuberRef.current) {

@@ -6,14 +6,17 @@ import theme from "__dirname/styles/theme.js";
 import TitleBar from "__dirname/components/TitleBar.js";
 import Drawer from "__dirname/components/Drawer.js";
 import Head from 'next/head'
+import { mobileCheck } from '__dirname/utils/mobileCheck';
+
 
 global.videoIdMap = {};
 global.searchVideos = [];
 global.videos = [];
 
 const MyApp = ({ Component, pageProps}) => {
+  const isMobile = mobileCheck();
   const [vtubers, setVtubers] = useState({});
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(!isMobile);
   const [chooseTab, setChooseTab] = useState('/');
   useEffect(()=>{
     const fetchData = async () => {
@@ -40,6 +43,9 @@ const MyApp = ({ Component, pageProps}) => {
   };
   const onChangeTab = (tab) => {
     setChooseTab(tab);
+    if (isMobile) {
+      setOpen(false);
+    }
   };
 
   return (
@@ -51,7 +57,7 @@ const MyApp = ({ Component, pageProps}) => {
       <CssBaseline />
       <div className="mainRoot">
         <TitleBar onOpen={()=>setOpen(!open)}/>
-        <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={setChooseTab}/>
+        <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={onChangeTab}/>
         <div className={`main0 ${open&&'onOpen'}`}>
           <div className="main">
             <Component {...pageProps} vtubers={vtubers} updateVtuber={updateVtuber} onChangeTab={onChangeTab}/>

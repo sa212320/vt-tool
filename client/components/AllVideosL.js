@@ -74,6 +74,7 @@ export default function AllVideos(props) {
         </MuiPickersUtilsProvider>
       </div>
       <div className="flexWrap displayFlex">
+        {videoList.length?'':(<div>無</div>)}
         {videoList}
         <VideoImg/>
         <VideoImg/>

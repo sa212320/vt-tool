@@ -44,7 +44,8 @@ export default function myDrawer(props) {
       { text:'首頁', count:0, icon: <HomeIcon/>, url:'/'},
       { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
       { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
-      { text:'影片', count:0, icon: <MovieIcon/>, url:'/#old'},
+      { text:'影片(日期)', count:0, icon: <MovieIcon/>, url:'/#old'},
+      { text:'影片(關鍵字)', count:0, icon: <MovieIcon/>, url:'/#date'},
       { text:'Vtuber', count:0, icon: <AssignmentIndIcon/>, url:'/#vtuber'},
     ];
   } else {
@@ -53,11 +54,12 @@ export default function myDrawer(props) {
       { text:'首頁', count:0, icon: <HomeIcon/>, url:'/#'},
       { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
       { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
-      { text:'影片', count:0, icon: <MovieIcon/>, url:'/#old'},
+      { text:'影片(日期)', count:0, icon: <MovieIcon/>, url:'/#old'},
+      { text:'影片(關鍵字)', count:0, icon: <MovieIcon/>, url:'/#date'},
       { text:'Vtuber', count:0, icon: <AssignmentIndIcon/>, url:'/#vtuber'},
     ];
   }
-
+  
 
   useEffect(()=>{
     const fetchData = async () => {
