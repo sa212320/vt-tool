@@ -52,10 +52,11 @@ const MyApp = ({ Component, pageProps}) => {
     <ThemeProvider theme={theme}>
       <Head>
         <title>台姬殿 Vt-Tools</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="description" content="這裡有很多台灣 Vtuber 喔~"></meta>
-        <link rel="icon" href="/logo.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="/logo.ico" type="image/x-icon" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+        <meta name="description" content="這裡有很多台灣 Vtuber 喔~"/>
+        <meta name="google-site-verification" content="xheW9NlN4Om6u9IX6OBS0kaoWySa1dGed_w-JIhClD4"/>
+        <link rel="icon" href="/logo.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="/logo.ico" type="image/x-icon"/>
       </Head>
       <CssBaseline />
       <div className="mainRoot">
