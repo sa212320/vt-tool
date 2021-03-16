@@ -80,7 +80,7 @@ const videoParser = (videoDoc)=>{
 }
 
 console.log(now)
-getVideosInfo([vid, 'MYPRa-O6xbE']).then((docs)=>{
+getVideosInfo(["rUJzx15SGKY","xpgwwzxNenE","_0i1DlczAkY","jn_I4N7u1vo"]).then((docs)=>{
   console.log(docs)
-  console.log(videoParser(docs[1]))
+  // console.log(videoParser(docs[1]))
 })
