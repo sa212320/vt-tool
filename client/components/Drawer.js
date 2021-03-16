@@ -108,7 +108,7 @@ export default function myDrawer(props) {
 
           <div>
             <EmailIcon></EmailIcon>
-            <a href="dvdvd5566@gamil.com">Email</a>
+            <a href="mailto:dvdvd5566@gamil.com">dvdvd5566@gamil.com</a>
           </div>
           <div>
             <TwitterIcon></TwitterIcon>

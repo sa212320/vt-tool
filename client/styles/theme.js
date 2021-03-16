@@ -432,7 +432,7 @@ const theme = createMuiTheme({
             width: '100%',
             '&>div':{
               textAlign: 'left',
-              paddingLeft: 93,
+              paddingLeft: 22,
             },
             '& svg': {
               verticalAlign: 'middle',
@@ -446,8 +446,9 @@ const theme = createMuiTheme({
           '& .dvdImg':{
             width: 81,
             position: 'absolute',
-            left: 11,
-            top: 5,
+            left: 132,
+            top: 31,
+            pointerEvents: 'none',
           },
           '& .youtubeImg':{
             maxWidth: 100,
