@@ -14,20 +14,24 @@ global.searchVideos = [];
 global.videos = [];
 
 const MyApp = ({ Component, pageProps}) => {
-  const isMobile = mobileCheck();
+  const [isMobile, setIsMobile] = useState(mobileCheck());
   const [vtubers, setVtubers] = useState({});
-  const [open, setOpen] = useState(!isMobile);
+  const [open, setOpen] = useState(true);
   const [chooseTab, setChooseTab] = useState('/');
   useEffect(()=>{
     const fetchData = async () => {
       const vtubers = await callApi({path:'vtuber'});
       updateVtuber(vtubers);
+      
     };
     fetchData();
   }, []);
   if (process.browser) {
     useEffect(()=>{
       setTimeout(()=>{
+        const isMobile = mobileCheck();
+        setIsMobile(isMobile)
+        setOpen(!isMobile)
         const pathname = window.location.pathname+window.location.hash.split('_')[0];
         setChooseTab(pathname);
       })
@@ -66,7 +70,7 @@ const MyApp = ({ Component, pageProps}) => {
         <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={onChangeTab}/>
         <div className={`main0 ${open&&'onOpen'}`}>
           <div className="main">
-            <Component {...pageProps} vtubers={vtubers} updateVtuber={updateVtuber} onChangeTab={onChangeTab}/>
+            <Component {...pageProps} vtubers={vtubers} updateVtuber={updateVtuber} onChangeTab={onChangeTab} isMobile={isMobile}/>
           </div>
         </div>
       </div>

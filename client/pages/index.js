@@ -6,7 +6,6 @@ import Vtuber from "__dirname/components/Vtuber.js";
 import VideoImg from "__dirname/components/VideoImg.js";
 import AllVideosL from "__dirname/components/AllVideosL.js";
 import AllVideosText from "__dirname/components/AllVideosText.js";
-import { mobileCheck } from '__dirname/utils/mobileCheck';
 
 export default function VideoPage(props) {
   const [liveAndUpcoming, setLiveAndUpcoming] = useState([]);
@@ -17,7 +16,6 @@ export default function VideoPage(props) {
   const oldDateRef = useRef();
   const scrollElement = useRef();
   const deltHeight = 0;
-  const isMobile = mobileCheck();
   useEffect(()=>{
     const fetchData = async () => {
       let videos = await callApi({path:'videos/live'});
@@ -189,7 +187,7 @@ export default function VideoPage(props) {
         <div className={'indexPage'}>
           <img className={'logoImg'} src={'/logo.png'}></img>
           <div className={'titleDiv'}>
-            <div className={'title ' + (isMobile?'mobile':'')}>
+            <div className={'title ' + (props.isMobile?'mobile':'')}>
               <a href="https://discord.gg/TVPC" target="_blank">
                 <img className="discordImg" src="/discord.png"></img>
                 <img className="logoTitleImg" src="/logoTitle.png"></img>
