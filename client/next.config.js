@@ -11,6 +11,7 @@ module.exports = {
     return {
       '/': { page: '/' },
       '/watch': { page: '/watch' },
+      '/privacy': { page: '/privacy' },
     }
   }
 }

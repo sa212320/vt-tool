@@ -344,6 +344,19 @@ const theme = createMuiTheme({
             borderRadius: 10,
           },
         },
+        '.privacyRoot':{
+          overflow: 'auto',
+          padding:' 0 40px',
+          '& .logoImg':{
+            width: '100%',
+            maxWidth: 400,
+            verticalAlign: 'middle',
+            transform: 'translateX(10%)',
+          },
+          '& .paddingL':{
+            paddingLeft: 20,
+          },
+        },
         '.vtuberRoot':{
           height: '100%',
           overflow: 'auto',
@@ -447,7 +460,7 @@ const theme = createMuiTheme({
             width: 81,
             position: 'absolute',
             left: 132,
-            top: 31,
+            top: 48,
             pointerEvents: 'none',
           },
           '& .youtubeImg':{

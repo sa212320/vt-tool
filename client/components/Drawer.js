@@ -103,6 +103,11 @@ export default function myDrawer(props) {
       <div className={'indexPageDiscriptions'}>
         <div>
           <div>
+            <Link href="/privacy">
+              <a>隱私權政策與條款</a>
+            </Link>
+          </div>
+          <div>
           聯絡資訊:
           </div>
 
