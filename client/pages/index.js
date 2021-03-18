@@ -37,10 +37,12 @@ export default function VideoPage(props) {
     return r;
   };
 
-  const setVideoList = (videos, vtuberMapping) => {
+  const setVideoList = (originVideos, vtuberMapping) => {
+    const videos = originVideos.filter((video)=>moment(video.liveTime).diff(moment(), 'days')<7);
     videos.forEach(video => {
       video.vtuber = vtuberMapping[video.channelId];
     });
+    console.log(videos);
     const group = _.groupBy(videos, (v)=>v.liveBroadcastContent);
     let result = [];
     if (group.live) {
@@ -185,12 +187,12 @@ export default function VideoPage(props) {
     <div className="videoPageRoot" ref={scrollElement}>
       <div className={'indexRoot'}>
         <div className={'indexPage'}>
-          <img className={'logoImg'} src={'/logo.png'}></img>
+          <img className={'logoImg'} src={'/logo.png'} alt="台姬殿" title="台姬殿"></img>
           <div className={'titleDiv'}>
             <div className={'title ' + (props.isMobile?'mobile':'')}>
               <a href="https://discord.gg/TVPC" target="_blank">
-                <img className="discordImg" src="/discord.png"></img>
-                <img className="logoTitleImg" src="/logoTitle.png"></img>
+                <img className="discordImg" src="/discord.png" alt="台姬殿Discord:https://discord.gg/TVPC" title="台姬殿Discord:https://discord.gg/TVPC"></img>
+                <img className="logoTitleImg" src="/logoTitle.png" alt="台姬殿" title="台姬殿"></img>
               </a>
             </div>
           </div>

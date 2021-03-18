@@ -16,6 +16,8 @@ import Count from "__dirname/components/Count.js";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SearchIcon from '@material-ui/icons/Search';
 
+global.maxLiveVideoLength = 1;
+
 export default function Watch(propss) {
   let props = Object.assign({}, propss);
   let ids = getWatchVideo();
@@ -57,6 +59,7 @@ export default function Watch(propss) {
     await getWatchVideos(ids);
     await getLiveVideos();
     ids = ids.filter(id=>global.videoIdMap[id]);
+    ids = ids.slice(0, global.maxLiveVideoLength)
     setIds(ids)
     await getLeftVideo();
     setChatLL(ids);
@@ -71,6 +74,7 @@ export default function Watch(propss) {
     } else {
       ids = [...ids, videoId];
     }
+    ids = ids.slice(0, global.maxLiveVideoLength)
     setIds(ids)
     setVtuberList(vtubers);
     getLeftVideo(vtubers);

@@ -17,8 +17,8 @@ export default function MenuAppBar(props) {
       </IconButton>
       <Link href="/"> 
         <a className={'link'}>
-          <img className={'logoImg'}  src={'/DVD.png'}></img>
-          <span className={'title'} >Vt Tools</span>
+          <img className={'logoImg'} src={'/DVD.png'} alt="DD子" title="DD子"></img>
+          <span className={'title'} >DD tools</span>
         </a>
       </Link>
     </div>
