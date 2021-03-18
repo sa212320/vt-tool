@@ -83,6 +83,18 @@ const styles = theme => ({
     left: '50%',
     transform: `translateX(-50%)`,
     bottom: 151,
+  },
+  upcoming: {
+    backgroundColor: 'green',
+    color: 'white',
+    borderRadius: 25,
+    padding: '2px 9px',
+    fontWeight: 800,
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    left: '50%',
+    transform: `translateX(-50%)`,
+    bottom: 151,
   }
 });
 
@@ -113,7 +125,7 @@ const VideoImg = (props) => {
         </span>
         )}
         {props.video.liveBroadcastContent==='upcoming'&&(
-        <span className={classes.live}>
+        <span className={classes.upcoming}>
           即將播放 {props.video&&moment(props.video.liveTime).format('YYYY/MM/DD HH:mm')}
         </span>
         )}
