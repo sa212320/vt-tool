@@ -185,7 +185,14 @@ export default function VideoPage(props) {
 
   return (
     <div className="videoPageRoot" ref={scrollElement}>
+      <a className={'add'} href="https://www.youtube.com/channel/UCtWuTDvZeZ09COJ2SjfESzQ" target="_blank">
+          <img className={'add'} src={'/add2.jpg'} alt="祈霓722 Ch." title="祈霓722 Ch."></img>
+        </a>
+        <a className={'add'} href="https://www.youtube.com/channel/UCaN_Pq3x9pzhb7t9KhxQm8Q" target="_blank">
+          <img className={'add'} src={'/add1.jpg'} alt="夏莎莎 Zasasa" title="夏莎莎 Zasasa"></img>
+        </a>
       <div className={'indexRoot'}>
+
         <div className={'indexPage'}>
           <img className={'logoImg'} src={'/logo.png'} alt="台姬殿" title="台姬殿"></img>
           <div className={'titleDiv'}>
@@ -197,7 +204,9 @@ export default function VideoPage(props) {
             </div>
           </div>
         </div>
+
       </div>
+
       {liveAndUpcoming}
       <div className={'vtuberList'}>
         <Vtuber updateVtuber={props.updateVtuber}></Vtuber>

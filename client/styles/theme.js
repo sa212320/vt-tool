@@ -290,7 +290,7 @@ const theme = createMuiTheme({
             width: '100%',
             maxWidth: 400,
             verticalAlign: 'middle',
-            transform: 'translateX(10%)',
+            // transform: 'translateX(10%)',
           },
           '& .titleDiv':{
             // display: 'inline-block',
@@ -504,6 +504,9 @@ const theme = createMuiTheme({
             borderTopLeftRadius: 3,
             borderBottomLeftRadius: 3
           },
+        },
+        '.add':{
+          width:'50%'
         }
       },
     },
