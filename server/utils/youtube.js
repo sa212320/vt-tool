@@ -6,7 +6,8 @@ const {parseString} = require ('xml2js');
 const Channel = require('../database/channel');
 const Vtuber = require('../database/vtuber');
 const Videos = require('../database/videos');
-const {channelIds} = require('../config.js');
+const SpVideos = require('../database/spVideos');
+const {channelIds, specialVideoUrls} = require('../config.js');
 
 let youtubeCount = 0;
 
@@ -343,6 +344,29 @@ const getYoutubeCount = ()=>{
   return temp;
 };
 
+
+const getSpecialVideoDocs = async () => {
+  const originIds = specialVideoUrls.map(d=>d.replace('https://youtu.be/', ''));
+  const oldSpVideos = await SpVideos.getAll();
+  const ids = originIds.filter(id=>oldSpVideos.findIndex(doc=>doc.videoId===id)===-1);
+  if (ids.length) {
+    const docs = await getVideosInfo(ids);
+    docs.forEach(async (vidoe) => {
+      const channelId = vidoe.snippet.channelId;
+      const channelDoc = await getChannelDoc(channelId);
+      const spVideoDoc = {
+        videoId: vidoe.id,
+        title: vidoe.snippet.title,
+        photo: vidoe.snippet.thumbnails.high.url,
+        channelId,
+        channelName: channelDoc.name,
+        channelPhoto: channelDoc.photo,
+      }
+      return SpVideos.upsert(spVideoDoc);
+    });
+  }
+};
+
 module.exports = {
   getChannelDoc, 
   getPlayListItemByPlayListId, 
@@ -352,5 +376,6 @@ module.exports = {
   updateVideosDatabase,
   checkVideosDatabase,
   getYoutubeCount,
+  getSpecialVideoDocs,
   youtube
 };

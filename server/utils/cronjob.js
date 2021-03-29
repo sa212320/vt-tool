@@ -9,23 +9,23 @@ const {
   updateVideosDatabase,
   checkVideosDatabase,
   getYoutubeCount,
+  getSpecialVideoDocs,
 } =  require('./youtube.js');
 
 const initCronJob = async()=>{
   console.log('Strat Update'.green)
-  // return;
+  const now = moment().format('YYYY/MM/DD HH:mm:ss');
+  try {
+    await getSpecialVideoDocs();
+    // await initChannelDatabase();
+    // await updateVtuberDatabase();
+    // await initVideosDatabase();
+    // await checkVideosDatabase();
+    console.log(now, 'init OK'.green)
+  } catch (err) {
+    console.log(now.red, err.message);
+  }
 
-  // try {
-  //   await initChannelDatabase();
-  //   await updateVtuberDatabase();
-  //   await initVideosDatabase();
-  //   await checkVideosDatabase();
-  //   console.log(now, 'init OK'.green)
-  // } catch (err) {
-  //   console.log(now.red, err.message);
-  // }
-  // console.log(now.blue,  getYoutubeCount());
-  // return;
   console.log('cron start'.green)
   cron.schedule('*/2 * * * *', async () => {
     const now = moment().format('YYYY/MM/DD HH:mm:ss');

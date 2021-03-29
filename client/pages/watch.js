@@ -16,8 +16,6 @@ import Count from "__dirname/components/Count.js";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SearchIcon from '@material-ui/icons/Search';
 
-global.maxLiveVideoLength = 1;
-
 export default function Watch(propss) {
   let props = Object.assign({}, propss);
   let ids = getWatchVideo();
@@ -113,6 +111,10 @@ export default function Watch(propss) {
       const params = {ids};
       const videos = await callApi({path:'videos/ids', params});
       videos.forEach((video)=>{
+        global.videoIdMap[video.videoId] = video;
+      });
+      const spVideos = await callApi({path:'videos/sp', params});
+      spVideos.forEach((video)=>{
         global.videoIdMap[video.videoId] = video;
       });
     }

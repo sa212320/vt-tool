@@ -9,7 +9,9 @@ import AllVideosText from "__dirname/components/AllVideosText.js";
 
 export default function VideoPage(props) {
   const [liveAndUpcoming, setLiveAndUpcoming] = useState([]);
+  const [spVideos, setSpVideos] = useState([]);
   const vtuberRef = useRef();
+  const spRef = useRef();
   const liveRef = useRef();
   const upcomingRef = useRef();
   const oldRef = useRef();
@@ -17,6 +19,37 @@ export default function VideoPage(props) {
   const scrollElement = useRef();
   const deltHeight = 0;
   useEffect(()=>{
+    const getSpVideos = async () => {
+      let videos = await callApi({path:'videos/sp'});
+      videos = videos.sort((a, b)=>{
+        return new Date(a.updatedAt)-new Date(b.updatedAt);
+      });
+      const result = [];
+      result.push(<div ref={spRef} key={'spRef'}></div>);
+      result.push(titleBar('推薦影片', videos.length));
+      result.push(
+        <div className="flexWrap displayFlex" key={'live'}>
+          {videos.map((video)=>{
+            video.vtuber = {
+              channelId: video.channelId,
+              name: video.channelName,
+              photo: video.channelPhoto,
+            }
+            return <VideoImg key={video.videoId} video={video}/>;
+          })}
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+          <VideoImg/>
+        </div>
+      );
+      setSpVideos(result);
+    };
     const fetchData = async () => {
       let videos = await callApi({path:'videos/live'});
       videos = videos.sort((a, b)=>{
@@ -24,6 +57,7 @@ export default function VideoPage(props) {
       });
       setVideoList(videos, props.vtubers);
     };
+    getSpVideos();
     fetchData();
   }, [props.vtubers]);
   let isFirst = false;
@@ -102,11 +136,12 @@ export default function VideoPage(props) {
       const hash = window.location.hash.split('_')[0];
       const id = hash.replace('#', '');
       switch (id) {
-        case 'live': return scrollTo(liveRef, 120);
+        case 'live': return scrollTo(liveRef);
         case 'upcoming': return scrollTo(upcomingRef);
         case 'old': return scrollTo(oldRef);
         case 'date': return scrollTo(oldDateRef);
         case 'vtuber': return scrollTo(vtuberRef);
+        case 'sp': return scrollTo(spRef);
       }
       scrollTo();
     }
@@ -131,11 +166,12 @@ export default function VideoPage(props) {
       const id = hash.replace('#', '');
       tempTab = id;
       switch (id) {
-        case 'live': return scrollTo(liveRef, 120);
+        case 'live': return scrollTo(liveRef);
         case 'upcoming': return scrollTo(upcomingRef);
         case 'old': return scrollTo(oldRef);
         case 'date': return scrollTo(oldDateRef);
         case 'vtuber': return scrollTo(vtuberRef);
+        case 'sp': return scrollTo(spRef);
       }
       scrollTo();
     }, [window.location.hash]);
@@ -143,6 +179,11 @@ export default function VideoPage(props) {
       const timmer = setInterval(() => {
         if (tempTab === undefined) return;
         let tab = '';
+        if (scrollElement.current && liveRef.current) {
+          if (scrollElement.current.scrollTop - (spRef.current.offsetTop-deltHeight) > 0) {
+            tab = 'sp';
+          }
+        }
         if (scrollElement.current && liveRef.current) {
           if (scrollElement.current.scrollTop - (liveRef.current.offsetTop-deltHeight) > 0) {
             tab = 'live';
@@ -192,7 +233,6 @@ export default function VideoPage(props) {
           <img className={'add'} src={'/add1.jpg'} alt="夏莎莎 Zasasa" title="夏莎莎 Zasasa"></img>
         </a>
       <div className={'indexRoot'}>
-
         <div className={'indexPage'}>
           <img className={'logoImg'} src={'/logo.png'} alt="台姬殿" title="台姬殿"></img>
           <div className={'titleDiv'}>
@@ -204,9 +244,8 @@ export default function VideoPage(props) {
             </div>
           </div>
         </div>
-
       </div>
-
+      {spVideos}
       {liveAndUpcoming}
       <div className={'vtuberList'}>
         <Vtuber updateVtuber={props.updateVtuber}></Vtuber>

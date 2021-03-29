@@ -42,6 +42,7 @@ export default function myDrawer(props) {
   if (mobileCheck()) {
     list = [
       { text:'首頁', count:0, icon: <HomeIcon/>, url:'/'},
+      { text:'推薦影片', count:0, icon: <VideocamIcon/>, url:'/#sp'},
       { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
       { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
       { text:'影片(日期)', count:0, icon: <MovieIcon/>, url:'/#old'},
@@ -52,6 +53,7 @@ export default function myDrawer(props) {
     list = [
       { text:'直播室', count:0, icon: <OndemandVideoIcon/>, url:'/watch'},
       { text:'首頁', count:0, icon: <HomeIcon/>, url:'/#'},
+      { text:'推薦影片', count:0, icon: <VideocamIcon/>, url:'/#sp'},
       { text:'直播中', count:liveCount, icon: <VideocamIcon/>, url:'/#live'},
       { text:'即將播放', count:upcomingCount, icon: <AccessAlarmIcon/>, url:'/#upcoming'},
       { text:'影片(日期)', count:0, icon: <MovieIcon/>, url:'/#old'},
@@ -99,34 +101,35 @@ export default function myDrawer(props) {
             </StyledBadge>
           </ListItem>
         ))}
-      </List>
-      <div className={'indexPageDiscriptions'}>
-        <div>
+        <div className={'indexPageDiscriptions'}>
           <div>
-            <Link href="/privacy">
-              <a>隱私權政策與條款</a>
-            </Link>
-          </div>
-          <div>
-          聯絡資訊:
+            <div>
+              <Link href="/privacy">
+                <a>隱私權政策與條款</a>
+              </Link>
+            </div>
+            <div>
+            聯絡資訊:
+            </div>
+
+            <div>
+              <EmailIcon></EmailIcon>
+              <a href="mailto:dvdvd5566@gamil.com">dvdvd5566@gamil.com</a>
+            </div>
+            <div>
+              <TwitterIcon></TwitterIcon>
+              <a href="https://twitter.com/DdVtuber">Twitter</a>
+            </div>
+            <div>
+              <YouTubeIcon></YouTubeIcon>
+              <a href="https://www.youtube.com/channel/UCR3qiQWYf6aVN6eZxXsCnwg/">Youtube</a>
+            </div>
           </div>
 
-          <div>
-            <EmailIcon></EmailIcon>
-            <a href="mailto:dvdvd5566@gamil.com">dvdvd5566@gamil.com</a>
-          </div>
-          <div>
-            <TwitterIcon></TwitterIcon>
-            <a href="https://twitter.com/DdVtuber">Twitter</a>
-          </div>
-          <div>
-            <YouTubeIcon></YouTubeIcon>
-            <a href="https://www.youtube.com/channel/UCR3qiQWYf6aVN6eZxXsCnwg/">Youtube</a>
-          </div>
+          <img className={'dvdImg'} src={'/DVD.png'}></img>
         </div>
+      </List>
 
-        <img className={'dvdImg'} src={'/DVD.png'}></img>
-      </div>
     </Drawer>
   );
 }

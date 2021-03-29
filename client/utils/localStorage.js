@@ -1,11 +1,15 @@
 const setWatchVideo = (video) =>{
   if (process.browser) {
-    const videos = getWatchVideo();
+    let videos = getWatchVideo();
     const i = videos.indexOf(video.videoId);
     if (i === -1) {
       videos.push(video.videoId);
+      console.log(videos);
+      videos = videos.splice(videos.length - global.maxLiveVideoLength);
+
     } else {
       // videos.splice(i, 1);
+      // console.log(videos);
     }
     window.localStorage.setItem('WatchVideo', JSON.stringify(videos));
   }

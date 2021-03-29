@@ -36,6 +36,10 @@ const theme = createMuiTheme({
           width: 250,
           marginTop: 64,
         },
+        '.MuiList-root': {
+          minHeight: 600,
+          height: '100%',
+        },
         '.drawerTitle':{
           height:64,
           textAlign: 'right',

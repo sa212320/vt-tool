@@ -4,6 +4,7 @@ const {Sequelize} = require('sequelize');
 const Op = Sequelize.Op;
 
 const Videos = require('../../database/videos');
+const SpVideos = require('../../database/spVideos');
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -90,6 +91,11 @@ router.get('/upcomingCount', async (req, res)=>{
     },
   });
   return res.send({count});
+});
+
+router.get('/sp', async (req, res)=>{
+  const result = await SpVideos.getAll();
+  return res.send(result);
 });
 
 module.exports = router;

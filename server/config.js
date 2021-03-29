@@ -167,8 +167,17 @@ const channelIds = [
   // channelIdUrl[0]
 ];
 
+const specialVideoUrls = [
+  'https://youtu.be/qY5xpzAi6V8',
+  'https://youtu.be/HWmQsRxmSKQ',
+  'https://youtu.be/o8L4cp6tlHc',
+  'https://youtu.be/_P9dskixuwg',
+  'https://youtu.be/qbS5qy6O8sw',
+  'https://youtu.be/iIcoP2bk_Yk',
+  'https://youtu.be/QN8iOroCUzY',
+]; 
 // const channelIds = [channelIdUrl[0]];
 
 const dbFile = 'vtuber.db';
 
-module.exports = {channelIds, dbFile};
+module.exports = {channelIds, specialVideoUrls, dbFile};
