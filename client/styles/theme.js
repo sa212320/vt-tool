@@ -26,10 +26,10 @@ const theme = createMuiTheme({
           height: `100%`,
           width: `100%`,
           display: 'flex',
-          transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+          transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
           '&.onOpen':{
-            width: 'calc(100% - 250px)',
-            transform: 'translateX(250px)',
+            marginLeft: 250,
+            transition: 'margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
           },
         },
         '.MuiDrawer-paper':{
