@@ -189,6 +189,9 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCWsKzyG_gsRB715bjNXNwaQ',
   'https://www.youtube.com/channel/UCSu05mqOOANQKqCzfIsWbBg',
   'https://www.youtube.com/channel/UCKdPcPmrNjdTIsRQLxpgzwA',
+  'https://www.youtube.com/channel/UCRJa1VRDsYwaLlML0PLYcNA',
+  'https://www.youtube.com/channel/UC7giliMJeLyow68hd_i0DpA',
+  'https://www.youtube.com/channel/UC_BjgwcygvQatWUh06QQHwg',
 ];
 
 const twitchList = [
