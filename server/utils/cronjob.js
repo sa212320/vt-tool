@@ -13,14 +13,15 @@ const {
 } =  require('./youtube.js');
 
 const initCronJob = async()=>{
+  // return;
   console.log('Strat Update'.green)
   const now = moment().format('YYYY/MM/DD HH:mm:ss');
   try {
     await getSpecialVideoDocs();
-    // await initChannelDatabase();
-    // await updateVtuberDatabase();
-    // await initVideosDatabase();
-    // await checkVideosDatabase();
+    await initChannelDatabase();
+    await updateVtuberDatabase();
+    await initVideosDatabase();
+    await checkVideosDatabase();
     console.log(now, 'init OK'.green)
   } catch (err) {
     console.log(now.red, err.message);

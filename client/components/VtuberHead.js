@@ -61,10 +61,10 @@ const VtuberHead = (props) => {
           </a>
         </div>
         <div>{props.vtuber.name}</div>
-        <div>{props.vtuber.subscriberCount} 位訂閱者</div>
-        <div>{props.vtuber.viewCount} 總觀看次數</div>
-        <div>{props.vtuber.videoCount} 影片數量</div>
-        <div>{publishedAt} 出道時間</div>
+        <div>{props.vtuber.subscriberCount||'-'} 位訂閱者</div>
+        <div>{props.vtuber.viewCount||'-'} 總觀看次數</div>
+        <div>{props.vtuber.videoCount||'-'} 影片數量</div>
+        <div>{publishedAt} 頻道創立時間</div>
 
 
       </div>

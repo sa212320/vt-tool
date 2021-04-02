@@ -76,7 +76,7 @@ export default function VtuberTable(props) {
     { id: 'subscriberCount', label: '訂閱數量' },
     { id: 'viewCount', label: '觀看次數' },
     { id: 'videoCount', label: '影片數量' },
-    { id: 'publishedAt', label: '出道時間' },
+    { id: 'publishedAt', label: '頻道創立時間' },
     { id: 'country', label: '地區' },
   ];
   const classes = useStyles();

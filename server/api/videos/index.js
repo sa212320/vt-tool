@@ -46,6 +46,9 @@ router.get('/live', async (req, res)=>{
 });
 
 router.get('/search', async (req, res)=>{
+  if (!req.query.searchText) {
+    return res.send([]);
+  }
   const searchTexts = req.query.searchText.split(/[\s,]/);
   const query = searchTexts.map(t=>{
     return {
