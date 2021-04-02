@@ -15,7 +15,7 @@ global.videos = [];
 global.maxLiveVideoLength = 9;
 
 const MyApp = ({ Component, pageProps}) => {
-  const [isMobile, setIsMobile] = useState(mobileCheck());
+  const [isMobile, setIsMobile] = useState();
   const [vtubers, setVtubers] = useState({});
   const [open, setOpen] = useState(true);
   const [isBlack, setIsblack] = useState(false);
@@ -38,6 +38,11 @@ const MyApp = ({ Component, pageProps}) => {
         setChooseTab(pathname);
       })
     }, [window.location.pathname, window.location.hash]);
+    useEffect(()=>{
+      const isMobile = mobileCheck();
+      console.log(isMobile)
+      setIsMobile(isMobile);
+    }, []);
   }
 
   const updateVtuber = (vtubers) =>{
@@ -70,7 +75,7 @@ const MyApp = ({ Component, pageProps}) => {
         <link rel="shortcut icon" href="/logo.ico" type="image/x-icon"/>
       </Head>
       <CssBaseline />
-      <div className={"mainRoot " + (isBlack?'blackMode':'')}>
+      <div className={"mainRoot " + (isBlack?'blackMode ':'') + (isMobile?'mobileMode ':'')}>
         <TitleBar onOpen={()=>setOpen(!open)} changeMode={()=>changeMode(!isBlack)} isBlack={isBlack}/>
         <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={onChangeTab}/>
         <div className={`main0 ${open&&'onOpen'}`}>

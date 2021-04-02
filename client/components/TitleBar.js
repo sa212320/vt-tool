@@ -9,7 +9,7 @@ import NightsStayIcon from '@material-ui/icons/NightsStay';
 export default function MenuAppBar(props) {
   const onOpen = props.onOpen;
   return (
-    <div className={'titleBarRoot'} >
+    <div className={'titleBarRoot ' + (props.isMobile?'mobile':'mobile') } >
       <IconButton
           color="inherit"
           aria-label="open drawer"

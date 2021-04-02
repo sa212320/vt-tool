@@ -531,6 +531,84 @@ const theme = createMuiTheme({
             backgroundColor: '#FFF',
           }
         },
+        '.videoImgRoot':{
+          marginLeft: 16,
+          marginRight: 16,
+          minWidth: 200,
+          textAlign: 'center',
+          display: 'inline-block',
+          flex: 1,
+          overflow: 'hidden',
+          position: 'relative',
+          '& .headImg': {
+            width: 60,
+            borderRadius: '50%',
+            border: '2px solid',
+            verticalAlign: 'middle',
+          },
+          '& .timeDiv':{
+            display: 'inline-block',
+            marginTop: 7,
+            marginBottom: 7,
+            width: 'calc(100% - 20px)',
+            overflow: 'hidden',
+            textAlign: 'right',
+          },
+          '& .titleDiv':{
+            display: 'inline-block',
+            marginTop: 7,
+            marginBottom: 7,
+            height: 80,
+            width: 'calc(100% - 20px)',
+            overflow: 'hidden',
+            textAlign: 'right',
+          },
+          '& .title':{
+            display: 'inline-block',
+            width: 'calc(100% - 82px)',
+            textAlign: 'left',
+            marginLeft: 14,
+            verticalAlign: 'middle',
+            maxHeight: 60,
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            display: '-webkit-inline-box',
+            overflow: 'hidden',
+          },
+          '& .videoImg': {
+            width: '100%',
+          },
+          '& .time': {
+            color: 'rgba(0,0,0,0.4)',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          },
+          '& .live': {
+            backgroundColor: 'red',
+            color: 'white',
+            borderRadius: 25,
+            padding: '2px 9px',
+            fontWeight: 800,
+            position: 'absolute',
+            whiteSpace: 'nowrap',
+            left: '50%',
+            transform: `translateX(-50%)`,
+            bottom: 151,
+          },
+          '& .upcoming': {
+            backgroundColor: 'green',
+            color: 'white',
+            borderRadius: 25,
+            padding: '2px 9px',
+            fontWeight: 800,
+            position: 'absolute',
+            whiteSpace: 'nowrap',
+            left: '50%',
+            transform: `translateX(-50%)`,
+            bottom: 151,
+          }
+        },
         '.blackMode':{
           '& .titleBarRoot':{
             backgroundColor: '#222',
@@ -576,6 +654,55 @@ const theme = createMuiTheme({
               backgroundColor: '#111',
             }
           }
+        },
+        '.mobileMode':{
+          '& .discordImg':{
+            marginLeft:0,
+            marginRight:0,
+          },
+          '& .logoImg': {
+            marginLeft: 0,
+          },
+          '& .titleBarRightDiv': {
+            padding: '13px 4px',
+          },
+          '& .videoPageRoot':{
+            padding: 16,
+          },
+          '& .videoImgRoot':{
+            marginLeft: 4,
+            marginRight: 4,
+            minWidth: 'calc(50% - 8px)',
+            '& .headImg': {
+              width: 36,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+            },
+            '& .timeDiv':{
+              width: 'calc(100% - 20px)',
+              marginTop: 0,
+              marginBottom: 0,
+            },
+            '& .titleDiv':{
+              marginTop: 0,
+              marginBottom: 0,
+              height: 60,
+              width: 'calc(100% - 8px)',
+            },
+            '& .title':{
+              width: '100%',
+              marginLeft: 0,
+            },
+            '& .live': {
+              transform: `translateX(-50%) scale(0.7)`,
+              bottom: 106,
+            },
+            '& .upcoming': {
+              transform: `translateX(-50%) scale(0.7)`,
+              bottom: 106,
+            }
+          },
         },
         '.MuiBadge-colorSecondary':{
           color: '#fff !important'
