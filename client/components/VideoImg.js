@@ -29,7 +29,7 @@ const VideoImg = (props) => {
   if (props.video) {
     const publishedAt = props.video&&moment(props.video.publishedAt).format('YYYY/MM/DD HH:mm:ss');
     return(
-      <div className={'borderRoot videoImgRoot'} onClick={()=>watchVideo()}>
+      <a className={'borderRoot videoImgRoot'} onClick={()=>watchVideo()} href={`/watch#${props.video.videoId}`}>
         <img className={'videoImg'} src={props.video.photo}></img>
         {props.video.liveBroadcastContent==='live'&&(
         <span className={'live'}>
@@ -51,7 +51,7 @@ const VideoImg = (props) => {
           <div className={'time'}>{props.video.vtuber&&props.video.vtuber.name}</div>
           <div className={'time'}>{publishedAt}</div>
         </div>
-      </div>
+      </a>
     );
   }
   return <div className={'videoImgRoot'}></div>;

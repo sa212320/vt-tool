@@ -66,6 +66,7 @@ export default function Watch(propss) {
   };
   const watchVideo = (video)=>{
     video.noChoose = !video.noChoose;
+    window.location.hash = '';
     const videoId = video.videoId
     if (ids.includes(videoId)) {
       ids = ids.filter(id=>id!=videoId);

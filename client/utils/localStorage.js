@@ -17,9 +17,14 @@ const setWatchVideo = (video) =>{
 
 const getWatchVideo = () =>{
   if (process.browser) {
-    const r = window.localStorage.getItem('WatchVideo');
-    if (r) {
-      return JSON.parse(r);
+    const vidoeId = location.hash.replace('#', '');
+    if (vidoeId){
+      return [vidoeId];
+    } else {
+      const r = window.localStorage.getItem('WatchVideo');
+      if (r) {
+        return JSON.parse(r);
+      }
     }
   }
   return [];

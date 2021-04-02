@@ -179,33 +179,34 @@ export default function VideoPage(props) {
       const timmer = setInterval(() => {
         if (tempTab === undefined) return;
         let tab = '';
+        const dh = -60;
         if (scrollElement.current && liveRef.current) {
-          if (scrollElement.current.scrollTop - (spRef.current.offsetTop-deltHeight) > 0) {
+          if (scrollElement.current.scrollTop - (spRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'sp';
           }
         }
         if (scrollElement.current && liveRef.current) {
-          if (scrollElement.current.scrollTop - (liveRef.current.offsetTop-deltHeight) > 0) {
+          if (scrollElement.current.scrollTop - (liveRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'live';
           }
         }
         if (scrollElement.current && upcomingRef.current) {
-          if (scrollElement.current.scrollTop - (upcomingRef.current.offsetTop-deltHeight) > 0) {
+          if (scrollElement.current.scrollTop - (upcomingRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'upcoming';
           }
         }
         if (scrollElement.current && oldRef.current) {
-          if (scrollElement.current.scrollTop - (oldRef.current.offsetTop-deltHeight) > 0) {
+          if (scrollElement.current.scrollTop - (oldRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'old';
           }
         }
         if (scrollElement.current && oldDateRef.current) {
-          if (scrollElement.current.scrollTop - (oldDateRef.current.offsetTop-deltHeight) > 0) {
+          if (scrollElement.current.scrollTop - (oldDateRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'date';
           }
         }
         if (scrollElement.current && vtuberRef.current) {
-          if (scrollElement.current.scrollTop - (vtuberRef.current.offsetTop-deltHeight) > 0) {
+          if (scrollElement.current.scrollTop - (vtuberRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'vtuber';
           }
         }

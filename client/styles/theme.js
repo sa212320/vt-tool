@@ -523,6 +523,7 @@ const theme = createMuiTheme({
         },
         '.borderRoot':{
           marginTop: 16,
+          color: 'black',
           marginBottom: 16,
           border: '1px solid',
           cursor: 'pointer',
