@@ -703,6 +703,9 @@ const theme = createMuiTheme({
               bottom: 106,
             }
           },
+          '& .add':{
+            width:'100%'
+          },
         },
         '.MuiBadge-colorSecondary':{
           color: '#fff !important'
