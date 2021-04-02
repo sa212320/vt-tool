@@ -18,16 +18,6 @@ const styles = theme => ({
     position: 'relative',
 
   },
-  borderRoot:{
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    border: '1px solid',
-    cursor: 'pointer',
-    backgroundColor: '#F9F9F9',
-    '&:hover' :{
-      backgroundColor: '#FFF',
-    }
-  },
   headImg: {
     width: 60,
     borderRadius: '50%',
@@ -117,7 +107,7 @@ const VideoImg = (props) => {
   if (props.video) {
     const publishedAt = props.video&&moment(props.video.publishedAt).format('YYYY/MM/DD HH:mm:ss');
     return(
-      <div className={classes.root+' '+classes.borderRoot} onClick={()=>watchVideo()}>
+      <div className={'borderRoot ' + classes.root} onClick={()=>watchVideo()}>
         <img className={classes.videoImg} src={props.video.photo}></img>
         {props.video.liveBroadcastContent==='live'&&(
         <span className={classes.live}>

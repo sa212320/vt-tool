@@ -237,9 +237,9 @@ export default function VideoPage(props) {
           <img className={'logoImg'} src={'/logo.png'} alt="台姬殿" title="台姬殿"></img>
           <div className={'titleDiv'}>
             <div className={'title ' + (props.isMobile?'mobile':'')}>
-              <a href="https://discord.gg/TVPC" target="_blank">
+              <a className="logoTitleImg" href="https://discord.gg/TVPC" target="_blank">
                 <img className="discordImg" src="/discord.png" alt="台姬殿Discord:https://discord.gg/TVPC" title="台姬殿Discord:https://discord.gg/TVPC"></img>
-                <img className="logoTitleImg" src="/logoTitle.png" alt="台姬殿" title="台姬殿"></img>
+                <span className="logoTitleImg">台姬殿</span>
               </a>
             </div>
           </div>

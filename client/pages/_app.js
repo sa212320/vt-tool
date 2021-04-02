@@ -18,6 +18,7 @@ const MyApp = ({ Component, pageProps}) => {
   const [isMobile, setIsMobile] = useState(mobileCheck());
   const [vtubers, setVtubers] = useState({});
   const [open, setOpen] = useState(true);
+  const [isBlack, setIsblack] = useState(false);
   const [chooseTab, setChooseTab] = useState('/');
   useEffect(()=>{
     const fetchData = async () => {
@@ -52,6 +53,9 @@ const MyApp = ({ Component, pageProps}) => {
       setOpen(false);
     }
   };
+  const changeMode = (mode) => {
+    setIsblack(mode);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,8 +70,8 @@ const MyApp = ({ Component, pageProps}) => {
         <link rel="shortcut icon" href="/logo.ico" type="image/x-icon"/>
       </Head>
       <CssBaseline />
-      <div className="mainRoot">
-        <TitleBar onOpen={()=>setOpen(!open)}/>
+      <div className={"mainRoot " + (isBlack?'blackMode':'')}>
+        <TitleBar onOpen={()=>setOpen(!open)} changeMode={()=>changeMode(!isBlack)} isBlack={isBlack}/>
         <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={onChangeTab}/>
         <div className={`main0 ${open&&'onOpen'}`}>
           <div className="main">

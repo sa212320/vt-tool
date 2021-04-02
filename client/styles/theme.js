@@ -12,7 +12,6 @@ const theme = createMuiTheme({
         },
         body: {
           height: '100%',
-
           backgroundColor:'#EEE',
         },
         '#__next':{
@@ -346,6 +345,8 @@ const theme = createMuiTheme({
           '& .logoTitleImg':{
             verticalAlign: 'middle',
             borderRadius: 10,
+            textDecoration: 'none',
+            color: 'black'
           },
         },
         '.privacyRoot':{
@@ -388,6 +389,14 @@ const theme = createMuiTheme({
           },
           '& .link':{
             textDecoration: 'auto',
+          },
+          '& .titleBarRightDiv':{
+            float:'right',
+            padding: '13px 28px',
+            height: '100%',
+            '&>*':{
+              verticalAlign: 'middle'
+            }
           },
         },
         '.displayFlex':{
@@ -511,6 +520,65 @@ const theme = createMuiTheme({
         },
         '.add':{
           width:'50%'
+        },
+        '.borderRoot':{
+          marginTop: 16,
+          marginBottom: 16,
+          border: '1px solid',
+          cursor: 'pointer',
+          backgroundColor: '#F9F9F9',
+          '&:hover' :{
+            backgroundColor: '#FFF',
+          }
+        },
+        '.blackMode':{
+          '& .titleBarRoot':{
+            backgroundColor: '#222',
+            color: '#EEE',
+            '& .title':{
+              color: '#EEE',
+            }
+          },
+          '& .MuiPaper-root':{
+            backgroundColor: '#000',
+            color: '#BBB',
+            '& *':{
+              color: '#BBB',
+            }
+          },
+          '& .main':{
+            backgroundColor: '#111',
+            '& .videoTitle ':{
+              color: '#BBB',
+            },
+            '& .logoTitleImg':{
+              color: '#BBB',
+            }
+          },
+          '& .isTabActive':{
+            backgroundColor: '#111 !important',
+          },
+          '& .rightTab':{
+            '&>div':{
+              backgroundColor: '#000',
+              borderColor: '#000',
+              color: '#FFF',
+              '&:hover':{
+                backgroundColor: '#222',
+              }
+            },
+            '&>.choose':{
+              backgroundColor: '#111',
+            },
+          },
+          '& .searchInputDiv':{
+            '&>span':{
+              backgroundColor: '#111',
+            }
+          }
+        },
+        '.MuiBadge-colorSecondary':{
+          color: '#fff !important'
         }
       },
     },
