@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd /home/vt-tool
 git fetch
 sudo forever stop server2.js
 git reset --hard origin/main
