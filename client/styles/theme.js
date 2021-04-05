@@ -622,10 +622,12 @@ const theme = createMuiTheme({
           flex:1,
           backgroundColor: '#FFF',
           '& .vtuberHeadYoutubeImg':{
-            width:80,
-            position: 'absolute',
-            top: -11,
+            top: -14,
             left: 0,
+            width: 80,
+            position: 'absolute',
+            backgroundColor: '#FFF',
+            padding: 5,
           }
         },
         '.blackMode':{
