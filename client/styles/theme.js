@@ -610,6 +610,24 @@ const theme = createMuiTheme({
             bottom: 151,
           }
         },
+        '.vtuberHead':{
+          minWidth: 240,
+          height: 300,
+          padding: 8,
+          textAlign: 'center',
+          display: 'inline-block',
+          border: '1px solid',
+          verticalAlign: 'bottom',
+          position:'relative',
+          flex:1,
+          backgroundColor: '#FFF',
+          '& .vtuberHeadYoutubeImg':{
+            width:80,
+            position: 'absolute',
+            top: -11,
+            left: 0,
+          }
+        },
         '.blackMode':{
           '& .titleBarRoot':{
             backgroundColor: '#222',
@@ -653,6 +671,20 @@ const theme = createMuiTheme({
           '& .searchInputDiv':{
             '&>span':{
               backgroundColor: '#111',
+            }
+          },
+          '& .vtuberHead':{
+            backgroundColor: '#222',
+            color: '#BBB',
+          },
+          '& .borderRoot':{
+            backgroundColor: '#222',
+            color: '#EEE',
+            '&:hover' :{
+              backgroundColor: '#AAA',
+            },
+            '& .time':{
+              color: '#999',
             }
           }
         },

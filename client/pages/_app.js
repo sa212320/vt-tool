@@ -24,7 +24,6 @@ const MyApp = ({ Component, pageProps}) => {
     const fetchData = async () => {
       const vtubers = await callApi({path:'vtuber'});
       updateVtuber(vtubers);
-      
     };
     fetchData();
   }, []);
@@ -32,7 +31,7 @@ const MyApp = ({ Component, pageProps}) => {
     useEffect(()=>{
       setTimeout(()=>{
         const isMobile = mobileCheck();
-        setIsMobile(isMobile)
+        setIsMobile(isMobile);
         setOpen(!isMobile)
         const pathname = window.location.pathname+window.location.hash.split('_')[0];
         setChooseTab(pathname);
@@ -40,7 +39,6 @@ const MyApp = ({ Component, pageProps}) => {
     }, [window.location.pathname, window.location.hash]);
     useEffect(()=>{
       const isMobile = mobileCheck();
-      console.log(isMobile)
       setIsMobile(isMobile);
     }, []);
   }

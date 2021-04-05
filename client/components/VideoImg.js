@@ -12,11 +12,9 @@ const styles = theme => ({
 
 const VideoImg = (props) => {
   const router = useRouter()
-  const { classes } = props;
 
-
-
-  const watchVideo = ()=>{
+  const watchVideo = (e)=>{
+    e.preventDefault();
     setWatchVideo(props.video);
     setTimeout(()=>{
       if (mobileCheck()) {
@@ -25,11 +23,12 @@ const VideoImg = (props) => {
         router.push(`/watch`)
       }
     });
+    return false;
   };
   if (props.video) {
     const publishedAt = props.video&&moment(props.video.publishedAt).format('YYYY/MM/DD HH:mm:ss');
     return(
-      <a className={'borderRoot videoImgRoot'} onClick={()=>watchVideo()} href={`/watch#${props.video.videoId}`}>
+      <a className={'borderRoot videoImgRoot'} onClick={watchVideo} href={`/watch#${props.video.videoId}`}>
         <img className={'videoImg'} src={props.video.photo}></img>
         {props.video.liveBroadcastContent==='live'&&(
         <span className={'live'}>

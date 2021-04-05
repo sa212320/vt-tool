@@ -59,7 +59,21 @@ export default function VideoPage(props) {
     };
     getSpVideos();
     fetchData();
+    if (process.browser) {
+      const hash = window.location.hash.split('_')[0];
+      const id = hash.replace('#', '');
+      switch (id) {
+        case 'live': return scrollTo(liveRef);
+        case 'upcoming': return scrollTo(upcomingRef);
+        case 'old': return scrollTo(oldRef);
+        case 'date': return scrollTo(oldDateRef);
+        case 'vtuber': return scrollTo(vtuberRef);
+        case 'sp': return scrollTo(spRef);
+      }
+      scrollTo();
+    }
   }, [props.vtubers]);
+
   let isFirst = false;
   const titleBar = (text, count) =>{
     const r = (
@@ -129,22 +143,7 @@ export default function VideoPage(props) {
     
     result.push(<div ref={vtuberRef} key={'vtuberRef'}></div>);
     result.push(titleBar('Vtuber'));
-
-
     setLiveAndUpcoming(result);
-    if (process.browser) {
-      const hash = window.location.hash.split('_')[0];
-      const id = hash.replace('#', '');
-      switch (id) {
-        case 'live': return scrollTo(liveRef);
-        case 'upcoming': return scrollTo(upcomingRef);
-        case 'old': return scrollTo(oldRef);
-        case 'date': return scrollTo(oldDateRef);
-        case 'vtuber': return scrollTo(vtuberRef);
-        case 'sp': return scrollTo(spRef);
-      }
-      scrollTo();
-    }
   };
 
   const scrollTo = (ref, height=deltHeight) => {
@@ -223,6 +222,18 @@ export default function VideoPage(props) {
       }, 100);
       return ()=>clearInterval(timmer);
     }, []);
+    // useEffect(()=>{
+    //   const timmer = setInterval(async () => {
+    //     let videos = await callApi({path:'videos/live'});
+    //     if (vidoes) {
+    //       videos = videos.sort((a, b)=>{
+    //         return a.liveTime - b.liveTime;
+    //       });
+    //       setVideoList(videos, props.vtubers);
+    //     }
+    //   }, 5*60*1000);
+    //   return ()=>clearInterval(timmer);
+    // }, []);
   }
 
   return (
