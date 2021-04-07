@@ -7,6 +7,7 @@ import TitleBar from "__dirname/components/TitleBar.js";
 import Drawer from "__dirname/components/Drawer.js";
 import Head from 'next/head'
 import { mobileCheck } from '__dirname/utils/mobileCheck';
+import { getOrSetIsBlack } from "../utils/localStorage";
 
 
 global.videoIdMap = {};
@@ -18,7 +19,7 @@ const MyApp = ({ Component, pageProps}) => {
   const [isMobile, setIsMobile] = useState();
   const [vtubers, setVtubers] = useState({});
   const [open, setOpen] = useState(true);
-  const [isBlack, setIsblack] = useState(false);
+  const [isBlack, setIsblack] = useState();
   const [chooseTab, setChooseTab] = useState('/');
   useEffect(()=>{
     const fetchData = async () => {
@@ -40,6 +41,7 @@ const MyApp = ({ Component, pageProps}) => {
     useEffect(()=>{
       const isMobile = mobileCheck();
       setIsMobile(isMobile);
+      setIsblack(getOrSetIsBlack())
     }, []);
   }
 
@@ -57,6 +59,7 @@ const MyApp = ({ Component, pageProps}) => {
     }
   };
   const changeMode = (mode) => {
+    getOrSetIsBlack(mode)
     setIsblack(mode);
   };
 

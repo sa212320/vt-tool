@@ -36,4 +36,17 @@ const setIds = (ids) =>{
   }
 };
 
-export {setWatchVideo, getWatchVideo, setIds};
+const getOrSetIsBlack = (isBlack) =>{
+  if (process.browser ) {
+    if (isBlack !== undefined) {
+      window.localStorage.setItem('IsBlack', JSON.stringify(isBlack));
+    } else {
+      const r = window.localStorage.getItem('IsBlack');
+      if (r) {
+        return JSON.parse(r);
+      }
+    }
+  }
+};
+
+export {setWatchVideo, getWatchVideo, setIds, getOrSetIsBlack};
