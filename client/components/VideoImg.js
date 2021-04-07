@@ -25,6 +25,18 @@ const VideoImg = (props) => {
     });
     return false;
   };
+
+  const subscribe = (e, vtuber) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (vtuber) {
+      const channelId = vtuber.channelId;
+      window.open(`https://www.youtube.com/channel/${channelId}?sub_confirmation=1&feature=subscribe-embed-click`);
+    }
+    return false;
+    // window.
+  };
+
   if (props.video) {
     const publishedAt = props.video&&moment(props.video.publishedAt).format('YYYY/MM/DD HH:mm:ss');
     return(
@@ -50,6 +62,13 @@ const VideoImg = (props) => {
           <div className={'time'}>{props.video.vtuber&&props.video.vtuber.name}</div>
           <div className={'time'}>{publishedAt}</div>
         </div>
+        {props.video.vtuber&&
+          <a className={'subscribeButton'} 
+            type="button"
+            onClick={(e)=>subscribe(e, props.video.vtuber)}
+            href={`https://www.youtube.com/channel/${props.video.vtuber.channelId}?sub_confirmation=1&feature=subscribe-embed-click`}
+            target="_blank"
+          >訂閱</a>}
       </a>
     );
   }

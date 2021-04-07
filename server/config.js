@@ -204,6 +204,11 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCE7IKtGwecu9CifcuAjR_2A',
   'https://www.youtube.com/channel/UCN7sEdAjj4Q--al9pDsCPOg',
   'https://www.youtube.com/channel/UCgVuzUu24q8KIDOjJcmCnIQ',
+  'https://www.youtube.com/channel/UCSbwSPW2xLSZs7LyBcwcmAw',
+  'https://www.youtube.com/channel/UCUMwanMztK0Y-T-ns3bMR0g',
+  'https://www.youtube.com/channel/UCprlKrFgmLW4F_Ec80PWuCw',
+  'https://www.youtube.com/channel/UC05vNpgpEZ96Di2l2bg7-4A',
+  'https://www.youtube.com/channel/UCTtBkCcFPTGqvI8MFzY3MGQ',
 ];
 
 const twitchList = [

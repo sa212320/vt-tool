@@ -135,6 +135,13 @@ const theme = createMuiTheme({
             display: 'inline-block',
             float: 'left',
             cursor: 'pointer',
+            '& .subscribeButton':{
+              position: 'absolute',
+              padding: '0 3px',
+              right: 3,
+              top: 10,
+              borderTopRightRadius: 12,
+            }
           },
           '& .videoRoot':{
             position: 'relative',
@@ -608,7 +615,12 @@ const theme = createMuiTheme({
             left: '50%',
             transform: `translateX(-50%)`,
             bottom: 151,
-          }
+          },
+          '& .subscribeButton':{
+            position: 'absolute',
+            left: 25,
+            bottom: 60,
+          },
         },
         '.vtuberHead':{
           minWidth: 240,
@@ -629,6 +641,13 @@ const theme = createMuiTheme({
             backgroundColor: '#FFF',
             padding: 5,
           }
+        },
+        '.subscribeButton':{
+          backgroundColor: '#CC0000',
+          color: '#FFF',
+          textDecoration:'none',
+          padding: '3px 9px',
+          whiteSpace: 'nowrap',
         },
         '.blackMode':{
           '& .titleBarRoot':{
@@ -736,7 +755,14 @@ const theme = createMuiTheme({
             '& .upcoming': {
               transform: `translateX(-50%) scale(0.7)`,
               bottom: 106,
-            }
+            },
+            '& .subscribeButton':{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              left: 'auto',
+              bottom: 'auto',
+            },
           },
           '& .add':{
             width:'100%'

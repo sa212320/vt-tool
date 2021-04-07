@@ -205,7 +205,18 @@ export default function Watch(propss) {
     setChatroomList(chatroomL);
     getSearchDateVideo(selectedDate);
   };
+  const subscribe = (e, vtuber) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (vtuber) {
+      const channelId = vtuber.channelId;
+      window.open(`https://www.youtube.com/channel/${channelId}?sub_confirmation=1&feature=subscribe-embed-click`);
+    }
+    return false;
+    // window.
+  };
   const rightPlayListParser = (video, vtuber) => {
+    console.log(video)
     return (
       <div className="imgRoot" onClick={()=>watchVideo(video)} key={video.videoId+video.noChoose}>
         <img className={`${'rightPlayVideo'} ${!video.noChoose?'rightPlayVideoActice':''}`} src={video.photo}/>
@@ -217,6 +228,13 @@ export default function Watch(propss) {
           <div>{moment(video.liveTime).format('HH:mm')}</div>
         </div>
         )}
+        {video&&
+        <a className={'subscribeButton'} 
+          type="button"
+          onClick={(e)=>subscribe(e, video)}
+          href={`https://www.youtube.com/channel/${video.channelId}?sub_confirmation=1&feature=subscribe-embed-click`}
+          target="_blank"
+        >訂閱</a>}
         <div className={'videoTitle'}>{video.title}</div>
       </div>
     );
