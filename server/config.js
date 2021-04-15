@@ -209,6 +209,18 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCprlKrFgmLW4F_Ec80PWuCw',
   'https://www.youtube.com/channel/UC05vNpgpEZ96Di2l2bg7-4A',
   'https://www.youtube.com/channel/UCTtBkCcFPTGqvI8MFzY3MGQ',
+  'https://www.youtube.com/channel/UCabQQq9Jy4gtCij38EdsHKQ',
+  'https://www.youtube.com/channel/UCsGOB7Yw1ZhThDs0Ytn45ZQ',
+  'https://www.youtube.com/channel/UCRbpT1E6aqHxY0TffauHbgw',
+  'https://www.youtube.com/channel/UCZFC4IJ-W_BefQdGgeO8p3g',
+  'https://www.youtube.com/channel/UCWbba2g-jli2Jeq2gLlWySw',
+  'https://www.youtube.com/channel/UCNkdNVoAajTdifBkONRwrcg',
+  'https://www.youtube.com/channel/UC4inrFfYtl3BQtNayhSV8uw',
+  'https://www.youtube.com/channel/UCAN-OUkSXeJIMHU9Iogxl7w',
+  'https://www.youtube.com/channel/UCbYJ6alwTIBoyHi8tLiPVqw',
+  'https://www.youtube.com/channel/UCKqetcNPf57R7kBW5xob0nw',
+  'https://www.youtube.com/channel/UCMaVlKEVxJH_gXv64wv9bmg',
+  'https://www.youtube.com/channel/UCttLL51poPUG5KOvk2pFOHQ',
 ];
 
 const twitchList = [
@@ -233,6 +245,13 @@ const specialVideoUrls = [
   'https://youtu.be/qbS5qy6O8sw',
   'https://youtu.be/iIcoP2bk_Yk',
   'https://youtu.be/QN8iOroCUzY',
+  'https://youtu.be/Hg6iUJvV8Ss',
+  'https://youtu.be/EAFwG56ATes',
+  'https://youtu.be/zb_5IcfR8WU',
+  'https://youtu.be/GjDW2BADzG8',
+  'https://youtu.be/OaK3d4hEVOM',
+  'https://youtu.be/RaMAp_aPrc0',
+  'https://youtu.be/IxIONNW-6FA',
 ]; 
 // const channelIds = [channelIdUrl[0]];
 
