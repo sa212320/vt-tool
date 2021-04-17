@@ -221,6 +221,19 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCKqetcNPf57R7kBW5xob0nw',
   'https://www.youtube.com/channel/UCMaVlKEVxJH_gXv64wv9bmg',
   'https://www.youtube.com/channel/UCttLL51poPUG5KOvk2pFOHQ',
+  'https://www.youtube.com/channel/UChE0YoYwQlIZFhlPZzpuEww',
+  'https://www.youtube.com/channel/UC4JivohUPR7gJLOZ0HiLA1A',
+  'https://www.youtube.com/channel/UCHJyr2QQWGASn7FbodVh2aQ',
+  'https://www.youtube.com/channel/UCgYobGgRQSOS2NMbNAGKtuw',
+  'https://www.youtube.com/channel/UCfaF_aicMRzanfVGmSp04Hg',
+];
+
+const newChannelIds = [
+  'https://www.youtube.com/channel/UChE0YoYwQlIZFhlPZzpuEww',
+  'https://www.youtube.com/channel/UC4JivohUPR7gJLOZ0HiLA1A',
+  'https://www.youtube.com/channel/UCHJyr2QQWGASn7FbodVh2aQ',
+  'https://www.youtube.com/channel/UCgYobGgRQSOS2NMbNAGKtuw',
+  'https://www.youtube.com/channel/UCfaF_aicMRzanfVGmSp04Hg',
 ];
 
 const twitchList = [
@@ -257,4 +270,4 @@ const specialVideoUrls = [
 
 const dbFile = 'vtuber.db';
 
-module.exports = {channelIds, specialVideoUrls, dbFile};
+module.exports = {channelIds, specialVideoUrls, dbFile, newChannelIds};

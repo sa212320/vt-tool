@@ -7,7 +7,7 @@ const Channel = require('../database/channel');
 const Vtuber = require('../database/vtuber');
 const Videos = require('../database/videos');
 const SpVideos = require('../database/spVideos');
-const {channelIds, specialVideoUrls} = require('../config.js');
+const {channelIds, specialVideoUrls, newChannelIds} = require('../config.js');
 
 let youtubeCount = 0;
 
@@ -367,7 +367,67 @@ const getSpecialVideoDocs = async () => {
   }
 };
 
+const addNewChannel = async () => {
+  let channelIdDocs = [];
+  let vtuberDocs = [];
+  const initChannelDatabase = () =>{
+    const promises = newChannelIds.map((url)=>{
+      const path = url.replace('https://www.youtube.com/', '');
+      const [type, id] = path.split('/');
+      if (type === 'channel') {
+        channelIdDocs.push({id, type});
+        return Channel.upsert({id, type});
+      } else if (type === 'user'){
+        channelIdDocs.push({id, type});
+        return Channel.upsert({id, type});
+      }
+      return Promise.resolve();
+    });
+    return Promise.all(promises);
+  };
+  const updateVtuberDatabase = async () => {
+    const promises = channelIdDocs.map(({id, type}) => {
+      if (type === 'channel') {
+        return getChannelDoc(id).then((doc)=>{
+          vtuberDocs.push(doc)
+          return Vtuber.upsert(doc);
+        });
+      } else if (type === 'user'){
+        return getChannelDocByUsername(id).then((doc)=>{
+          vtuberDocs.push(doc)
+          return Vtuber.upsert(doc);
+        });
+      }
+    });
+    return Promise.all(promises);
+  }
+  const initVideosDatabase = async () => {
+    const vtubers = vtuberDocs;
+    const promisses = vtubers.map(async (vtuber)=>{
+      if (!vtuber.videoCount) return Promise.resolve();
+      const newIds = await getAllVideoId(vtuber);
+      if (newIds.length) {
+        const videos = await getVideosInfo(newIds);
+        return Promise.all(videos.map(async (video)=>{
+          const info = videoParser(video);
+          if (info.liveBroadcastContent === 'delete' && info.videoId) {
+            return Videos.destroy({where: {videoId:info.videoId}});
+          }
+          return Videos.upsert(info);
+        }));
+      }
+      return Promise.resolve();
+    });
+    return Promise.all(promisses);
+  }
+  await initChannelDatabase();
+  await updateVtuberDatabase();
+  await initVideosDatabase();
+};
+
 module.exports = {
+  addNewChannel,
+
   getChannelDoc, 
   getPlayListItemByPlayListId, 
   initVideosDatabase,

@@ -3,6 +3,7 @@ const colors = require('colors');
 const moment =  require('moment');
 
 const { 
+  addNewChannel,
   initVideosDatabase,
   initChannelDatabase,
   updateVtuberDatabase,
@@ -18,6 +19,7 @@ const initCronJob = async()=>{
   const now = moment().format('YYYY/MM/DD HH:mm:ss');
   try {
     // await getSpecialVideoDocs();
+    // await addNewChannel();
     // await initChannelDatabase();
     // await updateVtuberDatabase();
     // await initVideosDatabase();
