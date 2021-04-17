@@ -123,6 +123,11 @@ export default function myDrawer(props) {
               <YouTubeIcon></YouTubeIcon>
               <a href="https://www.youtube.com/channel/UCR3qiQWYf6aVN6eZxXsCnwg/">Youtube</a>
             </div>
+            <div style={{display:"none"}}>
+              <a href="http://whos.amung.us/stats/n7t8121ylv/">
+                <img src="http://whos.amung.us/widget/n7t8121ylv.png" width="81" height="29" border="0" title="Click to see how many people are online" />
+              </a>
+            </div>
           </div>
 
           <img className={'dvdImg'} src={'/DVD.png'}></img>
