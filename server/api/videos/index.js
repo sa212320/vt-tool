@@ -4,6 +4,7 @@ const {Sequelize} = require('sequelize');
 const Op = Sequelize.Op;
 
 const Videos = require('../../database/videos');
+const Vtuber = require('../../database/vtuber');
 const SpVideos = require('../../database/spVideos');
 
 const router = express.Router();
@@ -49,7 +50,9 @@ router.get('/search', async (req, res)=>{
   if (!req.query.searchText) {
     return res.send([]);
   }
+  const max = 100;
   const searchTexts = req.query.searchText.split(/[\s,]/);
+
   const query = searchTexts.map(t=>{
     return {
       title: {[Op.like]: `%${t}%`},
@@ -59,11 +62,41 @@ router.get('/search', async (req, res)=>{
     where: {
       [Op.and]: query,
     },
-    limit: 100,
+    limit: max,
     order: [
       ['publishedAt', 'DESC'],
     ],
   });
+  const maxDelta = max - result.length;
+  if (maxDelta > 0) {
+    const vtuberQuery = searchTexts.map(t=>{
+      return {
+        name: {[Op.like]: `%${t}%`},
+      };
+    });  
+    const vtubers = await Vtuber.findAll({
+      where: {
+        [Op.and]: vtuberQuery,
+      },
+      limit: maxDelta,
+    });
+    const result2 = await Videos.findAll({
+      where: {
+        channelId: {
+          [Op.in]: vtubers.map((vtuber)=>vtuber.channelId),
+        },
+        videoId: {
+          [Op.notIn]: result.map((video)=>video.videoId),
+        },
+      },
+      limit: maxDelta,
+      order: [
+        ['publishedAt', 'DESC'],
+      ],
+    });
+    result.push(...result2);
+    result.sort((a, b)=>b.publishedAt - a.publishedAt);
+  };
   return res.send(result);
 });
 
