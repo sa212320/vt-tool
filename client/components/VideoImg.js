@@ -38,7 +38,7 @@ const VideoImg = (props) => {
   };
 
   if (props.video) {
-    const publishedAt = props.video&&moment(props.video.publishedAt).format('YYYY/MM/DD HH:mm:ss');
+    const publishedAt = props.video&&moment(props.video.publishedAt||props.video.updatedAt).format('YYYY/MM/DD HH:mm:ss');
     return(
       <a className={'borderRoot videoImgRoot'} onClick={watchVideo} href={`/watch#${props.video.videoId}`}>
         <img className={'videoImg'} src={props.video.photo}></img>
