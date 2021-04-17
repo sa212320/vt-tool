@@ -17,11 +17,32 @@ const theme = createMuiTheme({
         body: {
           height: '100%',
           backgroundColor:'#EEE',
+          overflow: 'hidden',
+        },
+        '.addDiv':{
+          width: '100%',
+          transition: 'width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+          '&.onOpen':{
+            width: 'calc(100% - 250px)',
+            transition: 'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+          },
+        },
+        '.addDiv2':{
+          width: '100%',
+          position: 'fixed',
+          top: titlebarHeight,
+          zIndex: 10,
+          transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+          '&.onOpen':{
+            width: '100%',
+            marginLeft: 250,
+            transition: 'margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+          },
         },
         '.addsRoot': {
           position: 'relative',
           padding: '4.2%',
-
+          
           '& .swiper-pagination-bullets': {
             bottom: '5%',
           },
@@ -338,7 +359,7 @@ const theme = createMuiTheme({
         },
         '.indexRoot':{
           overflow: 'auto',
-          padding:' 0 40px',
+          padding:'10% 40px 0',
           display: 'flex',
           justifyContent: 'center',
           flexWrap: 'wrap',
@@ -756,6 +777,9 @@ const theme = createMuiTheme({
           }
         },
         '.mobileMode':{
+          '& .indexRoot':{
+            padding:'20% 40px 0',
+          },
           '& .discordImg':{
             marginLeft:0,
             marginRight:0,
@@ -829,7 +853,13 @@ const theme = createMuiTheme({
         },
         '.MuiBadge-colorSecondary':{
           color: '#fff !important'
-        }
+        },
+        '.displayNone':{
+          display: 'none !important',
+        },
+        '.visibilityHidden':{
+          visibility: 'hidden !important',
+        },
       },
     },
   },

@@ -7,7 +7,7 @@ SwiperCore.use([Navigation, Pagination, Autoplay, A11y]);
 
 export default function Adds(props) {
   const [addElements, setAddElements] = useState([]);
-
+  const swiperRef = useRef();
   const addToElement = (addDoc) => {
     return (
       <SwiperSlide key={addDoc.img}>
@@ -22,12 +22,17 @@ export default function Adds(props) {
     const adds = await getAdds();
     const result = adds.map(addToElement);
     setAddElements(result);
-    return 
+    global.swiper = swiperRef.current.swiper;
+    return ()=>{
+      global.swiper = null;
+    }
   }, []);
+
 
   return (
     <div className="addsRoot">
       <Swiper
+        ref={swiperRef}
         navigation
         pagination
         loop={true}

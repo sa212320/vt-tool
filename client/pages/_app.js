@@ -8,6 +8,7 @@ import Drawer from "__dirname/components/Drawer.js";
 import Head from 'next/head'
 import { mobileCheck } from '__dirname/utils/mobileCheck';
 import { getOrSetIsBlack } from "../utils/localStorage";
+import Adds from "__dirname/components/Adds.js";
 import 'swiper/swiper-bundle.min.css';
 
 global.videoIdMap = {};
@@ -19,6 +20,7 @@ const MyApp = ({ Component, pageProps}) => {
   const [isMobile, setIsMobile] = useState();
   const [vtubers, setVtubers] = useState({});
   const [open, setOpen] = useState(true);
+  const [addDivClassname, setAddDivClassname] = useState('');
   const [isBlack, setIsblack] = useState();
   const [chooseTab, setChooseTab] = useState('/');
   useEffect(()=>{
@@ -36,6 +38,12 @@ const MyApp = ({ Component, pageProps}) => {
         setOpen(!isMobile)
         const pathname = window.location.pathname+window.location.hash.split('_')[0];
         setChooseTab(pathname);
+        console.log(pathname);
+        if (pathname === '/watch') {
+          setAddDivClassname('visibilityHidden');
+        } else {
+          setAddDivClassname('');
+        }
       })
     }, [window.location.pathname, window.location.hash]);
     useEffect(()=>{
@@ -62,6 +70,18 @@ const MyApp = ({ Component, pageProps}) => {
     getOrSetIsBlack(mode)
     setIsblack(mode);
   };
+  const openDrawer = (isOpen) => {
+    setOpen(isOpen);
+    const timmer = setInterval(() => {
+      if(global.swiper){
+        global.swiper.update();
+      }
+    }, 16.6666);
+    setTimeout(()=>{
+      global.swiper.update();
+      clearInterval(timmer);
+    }, 225)
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -79,8 +99,14 @@ const MyApp = ({ Component, pageProps}) => {
       </Head>
       <CssBaseline />
       <div className={"mainRoot " + (isBlack?'blackMode ':'') + (isMobile?'mobileMode ':'')}>
-        <TitleBar onOpen={()=>setOpen(!open)} changeMode={()=>changeMode(!isBlack)} isBlack={isBlack}/>
-        <Drawer open={open} onClose={setOpen} chooseTab={chooseTab} setChooseTab={onChangeTab}/>
+        <TitleBar onOpen={()=>openDrawer(!open)} changeMode={()=>changeMode(!isBlack)} isBlack={isBlack}/>
+        <div className={`addDiv2 ${open&&'onOpen'} ${addDivClassname}`}>
+          <div className={`addDiv ${open&&'onOpen'}`}>
+            <Adds isMobile={isMobile}></Adds>
+          </div>
+        </div>
+
+        <Drawer open={open} onClose={openDrawer} chooseTab={chooseTab} setChooseTab={onChangeTab}/>
         <div className={`main0 ${open&&'onOpen'}`}>
           <div className="main">
             <Component {...pageProps} vtubers={vtubers} updateVtuber={updateVtuber} onChangeTab={onChangeTab} isMobile={isMobile}/>

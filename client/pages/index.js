@@ -18,7 +18,7 @@ export default function VideoPage(props) {
   const oldRef = useRef();
   const oldDateRef = useRef();
   const scrollElement = useRef();
-  const deltHeight = 0;
+  const deltHeight = 160;
   useEffect(()=>{
     const getSpVideos = async () => {
       let videos = await callApi({path:'videos/sp'});
@@ -238,7 +238,9 @@ export default function VideoPage(props) {
 
   return (
     <div className="videoPageRoot" ref={scrollElement}>
-      <Adds isMobile={props.isMobile}></Adds>
+      {/* <div className={props.isFixAdd}>
+        <Adds isMobile={props.isMobile}></Adds>
+      </div> */}
       <div className={'indexRoot'}>
         <div className={'indexPage'}>
           <img className={'logoImg'} src={'/logo.png'} alt="台姬殿" title="台姬殿"></img>
