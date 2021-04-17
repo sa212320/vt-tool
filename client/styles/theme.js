@@ -7,12 +7,58 @@ const theme = createMuiTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
+        ':root': {
+          '--swiper-theme-color': 'black',
+          '--swiper-navigation-size': '1.5em',
+        },
         html: {
 
         },
         body: {
           height: '100%',
           backgroundColor:'#EEE',
+        },
+        '.addsRoot': {
+          position: 'relative',
+          padding: '4.2%',
+
+          '& .swiper-pagination-bullets': {
+            bottom: '5%',
+          },
+          '& .swiper-container': {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            left: 0,
+            top: 0,
+          },
+          '& .swiper-pagination-bullet':{
+            border: '1px solid rgba(255, 255, 255, 0.8)',
+            padding: '0.25%',
+            width: 0,
+            height: 0,
+            margin: '0 0.3% !important',
+          },
+          '& .swiper-button-prev': {
+            width: 'calc(var(--swiper-navigation-size)/44 * 70)',
+            height: 'calc(var(--swiper-navigation-size)/ 44 * 70)',
+            left: -10,
+            borderRadius: 50,
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            '&:hover':{
+              backgroundColor: '#FFF',
+            },
+          },
+          '& .swiper-button-next': {
+            width: 'calc(var(--swiper-navigation-size)/44 * 70)',
+            height: 'calc(var(--swiper-navigation-size)/ 44 * 70)',
+            right: -10,
+            borderRadius: 50,
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            '&:hover':{
+              backgroundColor: '#FFF',
+            },
+          }
         },
         '#__next':{
           height: '100vh',
@@ -766,6 +812,19 @@ const theme = createMuiTheme({
           },
           '& .add':{
             width:'100%'
+          },
+          '& .addsRoot': {
+            padding: '8.4%',
+            '& .swiper-pagination-bullet':{
+              padding: '0.85%',
+              margin:' 0 0.6% !important',
+            },
+            '& .swiper-button-prev': {
+              display: 'none',
+            },
+            '& .swiper-button-next': {
+              display: 'none',
+            }
           },
         },
         '.MuiBadge-colorSecondary':{

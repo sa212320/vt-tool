@@ -6,6 +6,7 @@ import Vtuber from "__dirname/components/Vtuber.js";
 import VideoImg from "__dirname/components/VideoImg.js";
 import AllVideosL from "__dirname/components/AllVideosL.js";
 import AllVideosText from "__dirname/components/AllVideosText.js";
+import Adds from "__dirname/components/Adds.js";
 
 export default function VideoPage(props) {
   const [liveAndUpcoming, setLiveAndUpcoming] = useState([]);
@@ -22,8 +23,9 @@ export default function VideoPage(props) {
     const getSpVideos = async () => {
       let videos = await callApi({path:'videos/sp'});
       videos = videos.sort((a, b)=>{
-        return new Date(a.updatedAt)-new Date(b.updatedAt);
+        return new Date(b.updatedAt)-new Date(a.updatedAt);
       });
+      console.log(videos)
       const result = [];
       result.push(<div ref={spRef} key={'spRef'}></div>);
       result.push(titleBar('推薦影片', videos.length));
@@ -179,7 +181,7 @@ export default function VideoPage(props) {
         if (tempTab === undefined) return;
         let tab = '';
         const dh = -60;
-        if (scrollElement.current && liveRef.current) {
+        if (scrollElement.current && spRef.current) {
           if (scrollElement.current.scrollTop - (spRef.current.offsetTop-deltHeight) >= dh) {
             tab = 'sp';
           }
@@ -238,12 +240,7 @@ export default function VideoPage(props) {
 
   return (
     <div className="videoPageRoot" ref={scrollElement}>
-      <a className={'add'} href="https://www.youtube.com/channel/UCtWuTDvZeZ09COJ2SjfESzQ" target="_blank">
-          <img className={'add'} src={'/add2.jpg'} alt="祈霓722 Ch." title="祈霓722 Ch."></img>
-        </a>
-        <a className={'add'} href="https://www.youtube.com/channel/UCaN_Pq3x9pzhb7t9KhxQm8Q" target="_blank">
-          <img className={'add'} src={'/add1.jpg'} alt="夏莎莎 Zasasa" title="夏莎莎 Zasasa"></img>
-        </a>
+      <Adds isMobile={props.isMobile}></Adds>
       <div className={'indexRoot'}>
         <div className={'indexPage'}>
           <img className={'logoImg'} src={'/logo.png'} alt="台姬殿" title="台姬殿"></img>

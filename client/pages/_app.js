@@ -8,7 +8,7 @@ import Drawer from "__dirname/components/Drawer.js";
 import Head from 'next/head'
 import { mobileCheck } from '__dirname/utils/mobileCheck';
 import { getOrSetIsBlack } from "../utils/localStorage";
-
+import 'swiper/swiper-bundle.min.css';
 
 global.videoIdMap = {};
 global.searchVideos = [];
@@ -74,6 +74,8 @@ const MyApp = ({ Component, pageProps}) => {
         <meta name="google-site-verification" content="xheW9NlN4Om6u9IX6OBS0kaoWySa1dGed_w-JIhClD4"/>
         <link rel="icon" href="/logo.ico" type="image/x-icon"/>
         <link rel="shortcut icon" href="/logo.ico" type="image/x-icon"/>
+        <script type="text/javascript" src="http://widgets.amung.us/classic.js"></script>
+        <script type="text/javascript">WAU_classic("ds9xu001eviu")</script>
       </Head>
       <CssBaseline />
       <div className={"mainRoot " + (isBlack?'blackMode ':'') + (isMobile?'mobileMode ':'')}>
