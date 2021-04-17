@@ -9,10 +9,9 @@ export default function Adds(props) {
   const [addElements, setAddElements] = useState([]);
 
   const addToElement = (addDoc) => {
-    console.log(addDoc)
     return (
       <SwiperSlide key={addDoc.img}>
-        <a href={addDoc.url}>
+        <a href={addDoc.url} target="_blank">
           <img style={{maxWidth:'100%', maxHeight:'100%'}} src={addDoc.img}></img>
         </a>
       </SwiperSlide>

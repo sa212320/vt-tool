@@ -4,7 +4,6 @@ const setWatchVideo = (video) =>{
     const i = videos.indexOf(video.videoId);
     if (i === -1) {
       videos.push(video.videoId);
-      console.log(videos);
       videos = videos.splice(videos.length - global.maxLiveVideoLength);
 
     } else {

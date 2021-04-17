@@ -216,7 +216,6 @@ export default function Watch(propss) {
     // window.
   };
   const rightPlayListParser = (video, vtuber) => {
-    console.log(video)
     return (
       <div className="imgRoot" onClick={()=>watchVideo(video)} key={video.videoId+video.noChoose}>
         <img className={`${'rightPlayVideo'} ${!video.noChoose?'rightPlayVideoActice':''}`} src={video.photo}/>

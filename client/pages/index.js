@@ -25,7 +25,6 @@ export default function VideoPage(props) {
       videos = videos.sort((a, b)=>{
         return new Date(b.updatedAt)-new Date(a.updatedAt);
       });
-      console.log(videos)
       const result = [];
       result.push(<div ref={spRef} key={'spRef'}></div>);
       result.push(titleBar('推薦影片', videos.length));
@@ -92,7 +91,6 @@ export default function VideoPage(props) {
     videos.forEach(video => {
       video.vtuber = vtuberMapping[video.channelId];
     });
-    console.log(videos);
     const group = _.groupBy(videos, (v)=>v.liveBroadcastContent);
     let result = [];
     if (group.live) {
