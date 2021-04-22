@@ -1,4 +1,5 @@
 require('dotenv').config();
+const colors = require('colors');
 const { google } = require('googleapis');
 const axios = require('axios');
 const moment = require('./moment');
@@ -100,7 +101,14 @@ const getNewVideos = async (channelId) => {
       if (err) {
         reject(err);
       }
-      resolve(result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})));
+      if (!result.feed.entry) {
+        console.log('No Video ChannelId: '.red, channelId)
+      }
+      if (result.feed.entry) {
+        resolve(result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})));
+      } else {
+        resolve([])
+      }
     });
   });
 };
@@ -287,6 +295,7 @@ const updateVideosDatabase = async () => {
   const promisses = vtubers.map(async (vtuber)=>{
     if (!vtuber.videoCount) return Promise.resolve();
     const originVideoIds = await getNewVideos(vtuber.channelId);
+    if (!originVideoIds.length) return Promise.resolve();
     const publishedAt = Math.min(...originVideoIds.map(v=>moment(v.published[0]).valueOf()));
     const exitVideos = await Videos.getVideoByChannelID(vtuber.channelId, publishedAt);
     const exitVideoId = {};

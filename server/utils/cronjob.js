@@ -34,8 +34,9 @@ const initCronJob = async()=>{
     const now = moment().format('YYYY/MM/DD HH:mm:ss');
     try {
       await updateVideosDatabase();
+      console.log(now, 'updateVideosDatabase OK'.green)
       await checkVideosDatabase();
-      console.log(now, 'CronMin OK'.green)
+      console.log(now, 'checkVideosDatabase OK'.green)
     } catch (err) {
       console.log(now.red, err.message);
     }

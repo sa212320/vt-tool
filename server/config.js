@@ -226,14 +226,31 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCHJyr2QQWGASn7FbodVh2aQ',
   'https://www.youtube.com/channel/UCgYobGgRQSOS2NMbNAGKtuw',
   'https://www.youtube.com/channel/UCfaF_aicMRzanfVGmSp04Hg',
+  'https://www.youtube.com/channel/UColGLoTgNEZJg5eW7KZnUJQ',
+  'https://www.youtube.com/channel/UCYqyub9VV7wjnZi5iyRUccw',
+  'https://www.youtube.com/channel/UCRi_JcuKneF0wUCC2zKIX0w',
+  'https://www.youtube.com/channel/UCsU_EiSw_cY4MNdvcNrFhHQ',
+  'https://www.youtube.com/channel/UCUPFo7X6mk00JvCyCxM3QXQ',
+  'https://www.youtube.com/channel/UCiMa509Rn-6XpGAklE_guMQ',
+  'https://www.youtube.com/channel/UCaTCcK1ciRCCTZsVm_0-txA',
+  'https://www.youtube.com/channel/UC177ZmZ6JQcpZvgqMexw-wQ',
+  'https://www.youtube.com/channel/UCftYR77MPeodTgYv-3oK17w',
+  'https://www.youtube.com/channel/UCWXy7kiH5Ej4FmSci_dsN-g',
+  'https://www.youtube.com/channel/UCJSBNjYCB1pu_t0FajsY17g',
 ];
 
 const newChannelIds = [
-  'https://www.youtube.com/channel/UChE0YoYwQlIZFhlPZzpuEww',
-  'https://www.youtube.com/channel/UC4JivohUPR7gJLOZ0HiLA1A',
-  'https://www.youtube.com/channel/UCHJyr2QQWGASn7FbodVh2aQ',
-  'https://www.youtube.com/channel/UCgYobGgRQSOS2NMbNAGKtuw',
-  'https://www.youtube.com/channel/UCfaF_aicMRzanfVGmSp04Hg',
+  'https://www.youtube.com/channel/UColGLoTgNEZJg5eW7KZnUJQ',
+  'https://www.youtube.com/channel/UCYqyub9VV7wjnZi5iyRUccw',
+  'https://www.youtube.com/channel/UCRi_JcuKneF0wUCC2zKIX0w',
+  'https://www.youtube.com/channel/UCsU_EiSw_cY4MNdvcNrFhHQ',
+  'https://www.youtube.com/channel/UCUPFo7X6mk00JvCyCxM3QXQ',
+  'https://www.youtube.com/channel/UCiMa509Rn-6XpGAklE_guMQ',
+  'https://www.youtube.com/channel/UCaTCcK1ciRCCTZsVm_0-txA',
+  'https://www.youtube.com/channel/UC177ZmZ6JQcpZvgqMexw-wQ',
+  'https://www.youtube.com/channel/UCftYR77MPeodTgYv-3oK17w',
+  'https://www.youtube.com/channel/UCWXy7kiH5Ej4FmSci_dsN-g',
+  'https://www.youtube.com/channel/UCJSBNjYCB1pu_t0FajsY17g',
 ];
 
 const twitchList = [
@@ -265,6 +282,7 @@ const specialVideoUrls = [
   'https://youtu.be/OaK3d4hEVOM',
   'https://youtu.be/RaMAp_aPrc0',
   'https://youtu.be/IxIONNW-6FA',
+  'https://youtu.be/cnp0pZ3lOW0',
 ]; 
 // const channelIds = [channelIdUrl[0]];
 
