@@ -71,7 +71,35 @@ const getPlayListItemByPlayListId = async (playlistId, maxResults=10, pageToken=
   })
   return ytResult.data.items;
 };
-
+const getVideosByChannelIdUseApi = async (channelId) => {
+  youtubeCount++;
+  const result = [];
+  console.log('Use Google Api: '.blue, channelId)
+  try {
+    const ytResult = await youtube.playlists.list({
+      part: 'snippet,contentDetails',
+      channelId,
+      maxResults:25,
+    });
+    const playlistIds = ytResult.data.items.map((doc) => doc.id);
+    const promises = await Promise.all(playlistIds.map((playlistId)=>{
+      return getPlayListItemByPlayListId(playlistId, 30);
+    }));
+    promises.forEach((videos)=>{
+      videos.forEach(video=>{
+        if (video && video.snippet && video.snippet.resourceId && video.snippet.resourceId.videoId) {
+          const id = video.snippet.resourceId.videoId;
+          const i = result.indexOf(id);
+          if (i === -1) result.push({id, published: [video.snippet.publishedAt]});
+        }
+      });
+    })
+  } catch (e) {
+    console.log('No Video ChannelId: '.red, channelId)
+  }
+  return result
+  // return ytResult.data.items;
+};
 
 const getLiveVideoIds2 = async (channelId) => {
   const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
@@ -85,7 +113,11 @@ const getLiveVideoIds2 = async (channelId) => {
       if (err) {
         reject(err);
       }
-      resolve(result.feed.entry.map(v=>v['yt:videoId']));
+      if (result.feed.entry) {
+        resolve(result.feed.entry.map(v=>v['yt:videoId']));
+      } else {
+        resolve(getVideosByChannelIdUseApi(channelId).map((doc)=>doc.id));
+      }
     });
   });
 };
@@ -101,13 +133,10 @@ const getNewVideos = async (channelId) => {
       if (err) {
         reject(err);
       }
-      if (!result.feed.entry) {
-        console.log('No Video ChannelId: '.red, channelId)
-      }
       if (result.feed.entry) {
         resolve(result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})));
       } else {
-        resolve([])
+        resolve(getVideosByChannelIdUseApi(channelId));
       }
     });
   });
@@ -446,5 +475,6 @@ module.exports = {
   checkVideosDatabase,
   getYoutubeCount,
   getSpecialVideoDocs,
+  getVideosByChannelIdUseApi,
   youtube
 };
