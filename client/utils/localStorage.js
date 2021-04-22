@@ -4,12 +4,10 @@ const setWatchVideo = (video) =>{
     const i = videos.indexOf(video.videoId);
     if (i === -1) {
       videos.push(video.videoId);
-      videos = videos.splice(videos.length - global.maxLiveVideoLength);
-
-    } else {
-      // videos.splice(i, 1);
-      // console.log(videos);
+      const delta = videos.length-global.maxLiveVideoLength;
+      if (delta >= 0) videos = videos.splice(delta);
     }
+    console.log(videos)
     window.localStorage.setItem('WatchVideo', JSON.stringify(videos));
   }
 };
@@ -17,7 +15,7 @@ const setWatchVideo = (video) =>{
 const getWatchVideo = () =>{
   if (process.browser) {
     const vidoeId = location.hash.replace('#', '');
-    if (vidoeId){
+    if (vidoeId && location.pathname === '/watch'){
       return [vidoeId];
     } else {
       const r = window.localStorage.getItem('WatchVideo');
