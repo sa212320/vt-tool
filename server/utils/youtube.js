@@ -382,6 +382,11 @@ const getYoutubeCount = ()=>{
   return temp;
 };
 
+const delSpecialVideoDocs = async () => {
+  await SpVideos.destroy({
+    where: {},
+  });
+};
 
 const getSpecialVideoDocs = async () => {
   const originIds = specialVideoUrls.map(d=>d.replace('https://youtu.be/', ''));
@@ -476,5 +481,6 @@ module.exports = {
   getYoutubeCount,
   getSpecialVideoDocs,
   getVideosByChannelIdUseApi,
+  delSpecialVideoDocs,
   youtube
 };
