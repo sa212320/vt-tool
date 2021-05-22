@@ -82,7 +82,6 @@ const channelIdUrl = [
   'https://www.youtube.com/channel/UCgC6azUmt9kRlLRuEVdsR9g',
   'https://www.youtube.com/channel/UCXe8hqIk_Yap31y7EOCMdzg',
   'https://www.youtube.com/channel/UCUV5em0AdJom3TZteqJvtfg',
-  'https://www.youtube.com/channel/UCV1n5iZ_w0uDr4V7PhsDl-g',
   'https://www.youtube.com/channel/UCCihPFnCKXL6XjJOnerFp1A',
   'https://www.youtube.com/channel/UCUhP5tDqyivUMH2so81BlZQ',
   'https://www.youtube.com/channel/UCfpvwBqyWIXwI_7fTBRsbKQ',
