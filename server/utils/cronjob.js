@@ -26,6 +26,10 @@ const initCronJob = async()=>{
     // await updateVtuberDatabase();
     // await initVideosDatabase();
     // await checkVideosDatabase();
+    // await updateVideosDatabase();
+    // console.log(now, 'updateVideosDatabase OK'.green)
+    // await checkVideosDatabase();
+    // console.log(now, 'checkVideosDatabase OK'.green)
     console.log(now, 'init OK'.green)
   } catch (err) {
     console.log(now.red, err.message);
@@ -33,7 +37,7 @@ const initCronJob = async()=>{
 
   console.log('cron start'.green);
   let isUpdateing = false;
-  cron.schedule('*/2 * * * *', async () => {
+  cron.schedule('*/6 * * * *', async () => {
     if (isUpdateing) return;
     isUpdateing = true;
     const now = moment().format('YYYY/MM/DD HH:mm:ss');
