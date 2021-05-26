@@ -339,6 +339,7 @@ const updateVideosDatabase = async () => {
     const videoIds = [];
     originVideoIds.forEach(({id})=>{
       if (!exitVideoId[id]) videoIds.push(id);
+    });
     if (videoIds.length) {
       const videos = await getVideosInfo(videoIds);
       return Promise.all(videos.map(async (video)=>{
