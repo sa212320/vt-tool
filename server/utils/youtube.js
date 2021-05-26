@@ -74,7 +74,7 @@ const getPlayListItemByPlayListId = async (playlistId, maxResults=10, pageToken=
 const getVideosByChannelIdUseApi = async (channelId) => {
   youtubeCount++;
   const result = [];
-  console.log('Use Google Api: '.blue, channelId)
+  // console.log('Use Google Api: '.blue, channelId)
   try {
     const ytResult = await youtube.playlists.list({
       part: 'snippet,contentDetails',
@@ -102,44 +102,49 @@ const getVideosByChannelIdUseApi = async (channelId) => {
 };
 
 const getLiveVideoIds2 = async (channelId) => {
-  const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
-    params: {
-      channel_id: channelId,
-      t: Date.now(),
-    },
-  })).data;
-  return new Promise((resolve, reject)=>{
-    parseString(result, function (err, result) {
-      if (err) {
-        reject(err);
-      }
-      if (result.feed.entry) {
-        resolve(result.feed.entry.map(v=>v['yt:videoId']));
-      } else {
-        resolve(getVideosByChannelIdUseApi(channelId).map((doc)=>doc.id));
-      }
-    });
-  });
+  return getVideosByChannelIdUseApi(channelId).map((doc)=>doc.id);
+  // const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
+  //   params: {
+  //     channel_id: channelId,
+  //     t: Date.now(),
+  //   },
+  // })).data;
+  // return new Promise((resolve, reject)=>{
+  //   parseString(result, function (err, result) {
+  //     if (err) {
+  //       reject(err);
+  //     }
+  //     if (result.feed.entry) {
+  //       resolve(result.feed.entry.map(v=>v['yt:videoId']));
+  //     } else {
+  //       resolve(getVideosByChannelIdUseApi(channelId).map((doc)=>doc.id));
+  //     }
+  //   });
+  // });
 };
 const getNewVideos = async (channelId) => {
-  const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
-    params: {
-      channel_id: channelId,
-      t: Date.now(),
-    },
-  })).data;
-  return new Promise((resolve, reject)=>{
-    parseString(result, function (err, result) {
-      if (err) {
-        reject(err);
-      }
-      if (result.feed.entry) {
-        resolve(result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})));
-      } else {
-        resolve(getVideosByChannelIdUseApi(channelId));
-      }
-    });
-  });
+  return getVideosByChannelIdUseApi(channelId);
+  // const result = (await axios.get('https://www.youtube.com/feeds/videos.xml', {
+  //   params: {
+  //     channel_id: channelId,
+  //     t: Date.now(),
+  //   },
+  // })).data;
+  // return new Promise((resolve, reject)=>{
+  //   parseString(result, function (err, result) {
+  //     if (err) {
+  //       console.log('channelId', err, channelId)
+  //       reject(err);
+  //     }
+  //     if (result.feed.entry) {
+  //       console.log('channelId', channelId, result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})))
+  //       resolve(result.feed.entry.map(v=>({id:v['yt:videoId'], published:v.published})));
+  //     } else {
+  //       console.log('channelId', channelId, getVideosByChannelIdUseApi(channelId))
+  //       resolve();
+  //     }
+  //   });
+  // });
 };
 
 // const getLiveVideoIds = async (channelId)=>{
