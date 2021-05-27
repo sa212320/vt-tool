@@ -6,5 +6,5 @@ const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: dbFile,
 });
-
+sequelize.query("PRAGMA journal_mode=WAL;");
 module.exports = sequelize;
