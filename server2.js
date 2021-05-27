@@ -2,6 +2,7 @@ require('dotenv').config();
 const next = require('next');
 const dev = false;
 const app = next({ dev, dir: './client' });
+const initCronJob = require('./server/utils/cronjob');
 const initServer = require('./server/utils/server');
 const Channel = require('./server/database/channel');
 const Vtuber = require('./server/database/vtuber');
@@ -22,6 +23,7 @@ const initDb = async () => {
 };
 
 initDb().then(()=>{
+  initCronJob();
   initServer(app);
 });
 
