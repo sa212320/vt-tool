@@ -479,7 +479,6 @@ const addNewChannel = async () => {
 module.exports = {
   addNewChannel,
 
-  getChannelDoc, 
   getPlayListItemByPlayListId, 
   initVideosDatabase,
   initChannelDatabase,

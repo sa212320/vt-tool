@@ -2,7 +2,6 @@ const { DataTypes } = require('sequelize');
 const db = require('../utils/db');
 const Channel = require('./channel');
 const { updateTime } = require('../config.js');
-const { getChannelDoc } = require('../utils/youtube.js');
 
 const Vtuber = db.define('Vtuber', {
   channelId: {
