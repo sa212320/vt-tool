@@ -263,6 +263,9 @@ const videoParser = (videoDoc)=>{
   }
   if (data.live_start) {
     saveInfo.startTime = moment(data.live_start).valueOf();
+    if (saveInfo.liveBroadcastContent === 'live' && moment().valueOf() - saveInfo.startTime >= 31536000000) {
+      saveInfo.liveBroadcastContent = 'none';
+    }
   }
   if (data.live_end) {
     saveInfo.endTime = moment(data.live_end).valueOf();

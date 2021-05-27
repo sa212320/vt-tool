@@ -37,7 +37,7 @@ const initCronJob = async()=>{
 
   console.log('cron start'.green);
   let isUpdateing = false;
-  cron.schedule('*/12 * * * *', async () => {
+  cron.schedule('*/10 * * * *', async () => {
     if (isUpdateing) return;
     isUpdateing = true;
     const now = moment().format('YYYY/MM/DD HH:mm:ss');
