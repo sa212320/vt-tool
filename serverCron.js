@@ -1,8 +1,5 @@
 require('dotenv').config();
-const next = require('next');
-const dev = false;
-const app = next({ dev, dir: './client' });
-const initServer = require('./server/utils/server');
+const initCronJob = require('./server/utils/cronjob');
 const Channel = require('./server/database/channel');
 const Vtuber = require('./server/database/vtuber');
 const Videos = require('./server/database/videos');
@@ -22,6 +19,6 @@ const initDb = async () => {
 };
 
 initDb().then(()=>{
-  initServer(app);
+  initCronJob();
 });
 
