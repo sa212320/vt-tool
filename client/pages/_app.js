@@ -16,7 +16,7 @@ global.searchVideos = [];
 global.videos = [];
 global.maxLiveVideoLength = 1;
 
-if (window?.location?.protocol) window.location.protocol = "https:";
+if (global?.location?.protocol) global.location.protocol = "https:";
 const MyApp = ({ Component, pageProps}) => {
   const [isMobile, setIsMobile] = useState();
   const [vtubers, setVtubers] = useState({});
