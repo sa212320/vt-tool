@@ -12,7 +12,7 @@ export default function AllVideos(props) {
   const [selectedDate, setSelectedDate] = useState(now);
   const [videoList, setVideoList] = useState([]);
   const [expanded, setExpanded] = useState(false);
-  
+  const minDate = new Date()-30*24*60*60*1000;
   let videos = [];
   
   const handleDateChange = async (data)=>{
@@ -66,6 +66,8 @@ export default function AllVideos(props) {
             margin="normal"
             value={selectedDate}
             onChange={handleDateChange}
+            minDate={minDate}
+            disableFuture="true"
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}>

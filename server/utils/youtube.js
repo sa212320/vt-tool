@@ -151,7 +151,6 @@ const getNewVideos = async (channelId) => {
   } catch (error) {
     result = "";
   }
-
   return new Promise((resolve, reject) => {
     parseString(result, function (err, result) {
       if (err) {
@@ -166,7 +165,7 @@ const getNewVideos = async (channelId) => {
           }))
         );
       } else {
-        return getVideosByChannelIdUseApi(channelId);
+        resolve(getVideosByChannelIdUseApi(channelId));
       }
     });
   });
@@ -370,10 +369,11 @@ const updateVtuberDatabase = async () => {
 
 const updateVideosDatabase = async () => {
   const vtubers = await Vtuber.getAll();
-  for (vtuber in vtubers) {
-    if (!vtuber.videoCount) return Promise.resolve();
+  const originVideoIds = await getNewVideos('UCwrdKu9P0y7D2SXrCNbjRyQ');
+  for (vtuber of vtubers) {
+    if (!vtuber.videoCount) continue;
     const originVideoIds = await getNewVideos(vtuber.channelId);
-    if (!originVideoIds.length) return Promise.resolve();
+    if (!originVideoIds.length) continue;
     const publishedAt = Math.min(
       ...originVideoIds.map((v) => moment(v.published[0]).valueOf())
     );
@@ -391,7 +391,7 @@ const updateVideosDatabase = async () => {
     });
     if (videoIds.length) {
       const videos = await getVideosInfo(videoIds);
-      return Promise.all(
+      await Promise.all(
         videos.map(async (video) => {
           const info = videoParser(video);
           if (info.liveBroadcastContent === "delete" && info.videoId) {
@@ -401,8 +401,8 @@ const updateVideosDatabase = async () => {
         })
       );
     }
-    return Promise.resolve();
   }
+  return Promise.resolve();
   // const promisses = vtubers.map(async (vtuber) => {
   //   if (!vtuber.videoCount) return Promise.resolve();
   //   const originVideoIds = await getNewVideos(vtuber.channelId);
