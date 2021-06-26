@@ -25,20 +25,20 @@ const initCronJob = async () => {
     // await initChannelDatabase();
     await updateVtuberDatabase();
     // await initVideosDatabase();
-<<<<<<< HEAD
+// <<<<<<< HEAD
     await checkVideosDatabase();
     // await updateVideosDatabase();
     // console.log(now, 'updateVideosDatabase OK'.green)
     // await checkVideosDatabase();
     // console.log(now, 'checkVideosDatabase OK'.green)
     // console.log(now, 'init OK'.green)
-=======
+// =======
     // await checkVideosDatabase();
     await updateVideosDatabase();
     console.log(1);
     await checkVideosDatabase();
     console.log(now, "init OK".green);
->>>>>>> f490140ebc53f7d5cf9905527e7f5b80967e2c9b
+// >>>>>>> f490140ebc53f7d5cf9905527e7f5b80967e2c9b
   } catch (err) {
     console.log(now.red, err.message);
   }
