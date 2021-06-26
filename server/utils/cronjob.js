@@ -21,11 +21,11 @@ const initCronJob = async()=>{
   try {
     // await delSpecialVideoDocs(),
     // await getSpecialVideoDocs();
-    // await addNewChannel();
+    await addNewChannel();
     // await initChannelDatabase();
-    // await updateVtuberDatabase();
+    await updateVtuberDatabase();
     // await initVideosDatabase();
-    // await checkVideosDatabase();
+    await checkVideosDatabase();
     // await updateVideosDatabase();
     // console.log(now, 'updateVideosDatabase OK'.green)
     // await checkVideosDatabase();
