@@ -14,7 +14,7 @@ import 'swiper/swiper-bundle.min.css';
 global.videoIdMap = {};
 global.searchVideos = [];
 global.videos = [];
-global.maxLiveVideoLength = 1;
+global.maxLiveVideoLength = 9;
 
 const MyApp = ({ Component, pageProps}) => {
   const [isMobile, setIsMobile] = useState();
