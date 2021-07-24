@@ -23,7 +23,7 @@ const initCronJob = async () => {
     // await getSpecialVideoDocs();
     await addNewChannel();
     // await initChannelDatabase();
-    // await updateVtuberDatabase();
+    await updateVtuberDatabase();
     // await initVideosDatabase();
     // await checkVideosDatabase();
     // await updateVideosDatabase();
